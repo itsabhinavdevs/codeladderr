@@ -1,0 +1,16 @@
+/* Dark is the default theme. This file exists as the explicit, named home for
+   dark-mode values (matching what tokens.css already sets on :root), so that
+   toggling data-theme="dark" is always meaningful even before appearance
+   preferences are wired up in a later phase. */
+
+:root,
+[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-card: #282828;
+  --color-border: #3e3e3e;
+  --color-text-primary: #e8e8e8;
+  --color-text-secondary: #8a8a8a;
+  --color-topbar-bg: #000000;
+  --color-topbar-text: #ffffff;
+  --color-topbar-hover: #d0d0d0;
+}

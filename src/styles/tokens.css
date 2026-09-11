@@ -1,0 +1,32 @@
+:root {
+  /* Surfaces */
+  --color-bg: #1a1a1a;
+  --color-card: #282828;
+  --color-border: #3e3e3e;
+
+  /* Text */
+  --color-text-primary: #e8e8e8;
+  --color-text-secondary: #8a8a8a;
+
+  /* Top bars (GeeksforGeeks style, same in both themes) */
+  --color-topbar-bg: #000000;
+  --color-topbar-text: #ffffff;
+  --color-topbar-hover: #d0d0d0;
+
+  /* Difficulty — never reuse these hues for anything else */
+  --color-easy: #3b82f6;
+  --color-medium: #eab308;
+  --color-hard: #ef4444;
+
+  /* Contribution graph — green is reserved for this, nowhere else */
+  --color-contrib-1: #0e4429;
+  --color-contrib-2: #006d32;
+  --color-contrib-3: #26a641;
+  --color-contrib-4: #39d353;
+
+  /* Layout */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
