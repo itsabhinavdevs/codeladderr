@@ -29,6 +29,31 @@
   --color-contrib-3: #26a641;
   --color-contrib-4: #39d353;
 
+  /* Hub accents — decorative only (badges, card left-bars). Never used for
+     difficulty and never green, since green is reserved for the contribution
+     graph. */
+  --color-hub-accent-1: #f5b942; /* amber */
+  --color-hub-accent-2: #6366f1; /* indigo */
+  --color-hub-accent-3: #14b8a6; /* teal */
+  --color-hub-accent-4: #ec4899; /* pink */
+
+  /* Alert banner (e.g. "daily goal" callout) — derived from the Hard/red hue,
+     used here as a generic urgency color rather than a difficulty label. */
+  --color-alert-bg: rgba(239, 68, 68, 0.12);
+  --color-alert-border: rgba(239, 68, 68, 0.35);
+  --color-alert-icon-bg: rgba(239, 68, 68, 0.18);
+
+  /* Accent purple used for focus glow on the search bar */
+  --color-focus-glow: rgba(139, 92, 246, 0.45);
+
+  /* Sheet-view progress panel — warm decorative background, distinct from the
+     alert banner (not urgency, just brand emphasis around the progress ring) */
+  --color-progress-panel-bg: rgba(120, 53, 15, 0.28);
+  --color-progress-panel-border: rgba(180, 83, 9, 0.35);
+
+  /* Neutral badge background used for small counters/pills on dark surfaces */
+  --color-badge-bg: rgba(255, 255, 255, 0.06);
+
   /* Typography Scale */
   --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-size-xs: 0.75rem;

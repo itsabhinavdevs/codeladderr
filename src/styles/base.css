@@ -9,6 +9,12 @@ body {
   height: 100%;
 }
 
+/* Add it right here */
+#app-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
 body {
   margin: 0;
   font-family: var(--font-family-base);
