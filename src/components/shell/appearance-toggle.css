@@ -1,0 +1,31 @@
+.appearance-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.appearance-toggle__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.appearance-toggle__switch {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.appearance-toggle__option {
+  padding: 6px 12px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.appearance-toggle__option--active {
+  background: var(--color-easy);
+  color: #ffffff;
+}
