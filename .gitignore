@@ -17,3 +17,7 @@ node_modules/
 
 # Local Netlify folder
 .netlify
+
+#data private scripts
+scripts/service-account.json
+scripts/_archived_*.js
