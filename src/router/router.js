@@ -3,6 +3,7 @@ import * as topbarPrimary from "../components/shell/topbar-primary.js";
 import * as topbarSecondary from "../components/shell/topbar-secondary.js";
 import * as sidebar from "../components/shell/sidebar.js";
 import * as footer from "../components/shell/footer.js";
+import * as practiceHub from "../components/practice/practice-hub.js";
 
 const VALID_SECTIONS = new Set([
   "dashboard",
@@ -24,6 +25,10 @@ const sectionRegistry = new Map([
       },
       unmount() {},
     },
+  ],
+  [
+    "practice",
+    practiceHub
   ],
 ]);
 
