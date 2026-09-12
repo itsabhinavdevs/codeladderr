@@ -1,87 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign in — DSA Tracker</title>
-  <link rel="stylesheet" href="/src/styles/tokens.css" />
-  <link rel="stylesheet" href="/src/styles/themes/dark.css" />
-  <link rel="stylesheet" href="/src/styles/base.css" />
-  <style>
-    .login-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
+<html lang="en" class="theme-dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSA Tracker — Sign in</title>
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/themes/dark.css" />
+    <link rel="stylesheet" href="/src/styles/themes/light.css" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <style>
+      .login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-bg);
+        padding: var(--space-md);
+      }
 
-    .login-card {
-      width: 100%;
-      max-width: 360px;
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-    }
+      .login-card {
+        width: 100%;
+        max-width: 360px;
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-xl) var(--space-lg);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-md);
+      }
 
-    .login-card img {
-      width: 56px;
-      height: 56px;
-      border-radius: 8px;
-      object-fit: cover;
-      margin-bottom: 1rem;
-    }
+      .login-card__logo {
+        width: 56px;
+        height: 56px;
+        border-radius: var(--radius-sm);
+        object-fit: cover;
+      }
 
-    .login-card h1 {
-      font-size: 1.25rem;
-      margin-bottom: 1.75rem;
-    }
+      .login-card__title {
+        font-size: var(--font-size-lg);
+        font-weight: 600;
+      }
 
-    .google-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1rem;
-      border-radius: 6px;
-      border: 1px solid var(--color-border);
-      background: var(--color-bg);
-      color: var(--color-text-primary);
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
+      .login-card__subtitle {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+        margin-top: calc(var(--space-xs) * -2);
+      }
 
-    .google-btn:hover {
-      border-color: var(--color-text-secondary);
-    }
+      .login-card__google-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        width: 100%;
+        padding: 12px var(--space-md);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-bg);
+        font-size: var(--font-size-sm);
+        font-weight: 500;
+        transition: border-color var(--transition-fast);
+      }
 
-    .google-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+      .login-card__google-btn:hover {
+        border-color: var(--color-text-secondary);
+      }
 
-    .login-loading {
-      color: var(--color-text-secondary);
-      font-size: 0.9rem;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-page">
-    <p id="login-loading" class="login-loading">Loading…</p>
-
-    <div id="login-card" class="login-card" hidden>
-      <img src="/public/assets/logos/logo.jpg" alt="DSA Tracker logo" />
-      <h1>DSA Tracker</h1>
-      <button id="google-signin-btn" class="google-btn" type="button">
-        Continue with Google
-      </button>
+      .login-card__loading {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="login-card" id="login-card">
+        <p class="login-card__loading" id="login-loading">Loading…</p>
+      </div>
     </div>
-  </div>
 
-  <script type="module" src="/src/main.js"></script>
-</body>
+    <script type="module">
+      import { onAuthChange, signInWithGoogle, handleRedirectResult } from "/src/firebase/auth.js";
+
+      // Plain `npx serve .` has no rewrite rules, so the real path to the app
+      // shell is /public/index.html. On Netlify, netlify.toml redirects "/"
+      // to /public/index.html, so a plain "/" also works there — but using
+      // the explicit /public/ path here keeps local dev and prod consistent.
+      function resolveAppUrl(page) {
+        const isLocalDev =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+        return isLocalDev ? `/public/${page}` : `/${page}`;
+      }
+
+      const card = document.getElementById("login-card");
+
+      function renderButton() {
+        card.innerHTML = `
+          <img class="login-card__logo" src="/public/assets/logos/logo.jpg" alt="DSA Tracker logo" />
+          <h1 class="login-card__title">DSA Tracker</h1>
+          <p class="login-card__subtitle">Track your DSA practice, every day.</p>
+          <button class="login-card__google-btn" id="google-signin-btn">Continue with Google</button>
+        `;
+        document.getElementById("google-signin-btn").addEventListener("click", async () => {
+          try {
+            await signInWithGoogle();
+          } catch (err) {
+            console.error("Sign-in failed", err);
+          }
+        });
+      }
+
+      handleRedirectResult().catch((err) => console.error("Redirect sign-in failed", err));
+
+      onAuthChange((user) => {
+        if (user) {
+          window.location.href = resolveAppUrl("index.html");
+        } else {
+          renderButton();
+        }
+      });
+    </script>
+  </body>
 </html>
