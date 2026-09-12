@@ -1,0 +1,23 @@
+#app-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#shell-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#section-content {
+  flex: 1;
+  padding: var(--space-lg);
+}
+
+.dashboard-placeholder {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  padding: var(--space-xl) 0;
+  text-align: center;
+}
