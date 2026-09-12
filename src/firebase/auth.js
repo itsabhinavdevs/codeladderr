@@ -2,16 +2,17 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
   deleteUser,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import {
   doc,
   getDoc,
   setDoc,
   serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import { auth, db } from "./init.js";
 
 const provider = new GoogleAuthProvider();
@@ -20,11 +21,18 @@ function isMobile() {
   return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 }
 
+function toPublicUser(user) {
+  if (!user) return null;
+  const { uid, displayName, email, photoURL } = user;
+  return { uid, displayName, email, photoURL };
+}
+
 /**
- * Creates users/{uid} with the default shape if it doesn't already exist.
- * Called on every successful sign-in; a no-op for returning users.
+ * Creates users/{uid} with default schema if it doesn't already exist.
+ * Called on sign-in and redirect completion; safe no-op for returning users.
  */
 async function bootstrapUserDoc(user) {
+  if (!user?.uid) return;
   const ref = doc(db, "users", user.uid);
   const snap = await getDoc(ref);
   if (!snap.exists()) {
@@ -40,10 +48,6 @@ async function bootstrapUserDoc(user) {
   }
 }
 
-/**
- * Signs the user in with Google. Tries a popup first; falls back to a full-page
- * redirect on mobile browsers where popups are commonly blocked.
- */
 export async function signInWithGoogle() {
   if (isMobile()) {
     await signInWithRedirect(auth, provider);
@@ -53,13 +57,32 @@ export async function signInWithGoogle() {
     const result = await signInWithPopup(auth, provider);
     await bootstrapUserDoc(result.user);
   } catch (err) {
-    // Popup blocked or failed for a reason other than user-cancellation — fall
-    // back to redirect so the sign-in can still succeed.
-    if (err && err.code === "auth/popup-blocked") {
+    if (
+      err &&
+      (err.code === "auth/popup-blocked" ||
+        err.code === "auth/cancelled-popup-request")
+    ) {
       await signInWithRedirect(auth, provider);
       return;
     }
+    // Only throw unexpected errors (like network failures) to the UI
     throw err;
+  }
+}
+
+/**
+ * Resolves the redirect operation if signInWithGoogle used the redirect flow.
+ * Call this function once during your application initialization/page load.
+ */
+export async function handleRedirectResult() {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result?.user) {
+      await bootstrapUserDoc(result.user);
+    }
+  } catch (err) {
+    // Log silently for monitoring, but do not crash the app startup
+    console.error("Redirect sign-in failed or was cancelled:", err);
   }
 }
 
@@ -67,21 +90,6 @@ export async function signOutUser() {
   await signOut(auth);
 }
 
-function toPublicUser(user) {
-  if (!user) return null;
-  return {
-    uid: user.uid,
-    displayName: user.displayName,
-    email: user.email,
-    photoURL: user.photoURL,
-  };
-}
-
-/**
- * Subscribes to auth state changes. Also bootstraps the user's Firestore
- * document on the redirect-based sign-in path (the popup path bootstraps
- * inline in signInWithGoogle above).
- */
 export function onAuthChange(callback) {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
