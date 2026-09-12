@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSA Tracker</title>
-  <link rel="stylesheet" href="/src/styles/tokens.css" />
-  <link rel="stylesheet" href="/src/styles/themes/dark.css" />
-  <link rel="stylesheet" href="/src/styles/base.css" />
-</head>
-<body>
-  <!-- Phase 1: bare shell. Sidebar/topbar/footer arrive in a later phase. -->
-  <div id="app-content"></div>
+<html lang="en" class="theme-dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSA Tracker</title>
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/themes/dark.css" />
+    <link rel="stylesheet" href="/src/styles/themes/light.css" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/components/shell/shell-layout.css" />
+    <link rel="stylesheet" href="/src/components/shell/topbar-primary.css" />
+    <link rel="stylesheet" href="/src/components/shell/topbar-secondary.css" />
+    <link rel="stylesheet" href="/src/components/shell/sidebar.css" />
+    <link rel="stylesheet" href="/src/components/shell/footer.css" />
+    <link rel="stylesheet" href="/src/components/shell/profile-dropdown.css" />
+    <link rel="stylesheet" href="/src/components/shell/appearance-toggle.css" />
+    <link rel="stylesheet" href="/src/components/shell/search-overlay.css" />
+  </head>
+  <body>
+    <div id="app-content"></div>
 
-  <script type="module" src="/src/main.js"></script>
-</body>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
