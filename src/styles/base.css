@@ -12,8 +12,9 @@ body {
 body {
   margin: 0;
   font-family: var(--font-family-base);
-  background: var(--color-bg);
+  font-size: var(--font-size-md);
   color: var(--color-text-primary);
+  background: var(--color-bg);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -23,20 +24,39 @@ img {
   display: block;
 }
 
+/* Fully reset buttons */
 button {
   font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
+/* Reset Links */
 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Reset Lists */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Inherit typography on inputs */
+input,
+textarea,
+select {
+  font-family: inherit;
   color: inherit;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* Complete header and paragraph reset */
+h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: 600;
 }
@@ -45,7 +65,20 @@ p {
   margin: 0;
 }
 
+/* Global focus state for keyboard navigation */
 :focus-visible {
   outline: 2px solid var(--color-easy);
   outline-offset: 2px;
+}
+
+/* Accessibility: Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

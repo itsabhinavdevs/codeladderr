@@ -1,4 +1,8 @@
-:root {
+/*
+ CSS VARIABLES (Design System & Theming)
+    */
+:root,
+[data-theme="dark"] {
   /* Surfaces */
   --color-bg: #1a1a1a;
   --color-card: #282828;
@@ -8,25 +12,143 @@
   --color-text-primary: #e8e8e8;
   --color-text-secondary: #8a8a8a;
 
-  /* Top bars (GeeksforGeeks style, same in both themes) */
+  /* Top bars */
   --color-topbar-bg: #000000;
   --color-topbar-text: #ffffff;
-  --color-topbar-hover: #d0d0d0;
+  --color-topbar-hover: #d4d4d4;
 
-  /* Difficulty — never reuse these hues for anything else */
+  /* Difficulty Indicators */
   --color-easy: #3b82f6;
   --color-medium: #eab308;
   --color-hard: #ef4444;
 
-  /* Contribution graph — green is reserved for this, nowhere else */
+  /* Contribution Heatmap */
+  --color-contrib-0: #161616;
   --color-contrib-1: #0e4429;
   --color-contrib-2: #006d32;
   --color-contrib-3: #26a641;
   --color-contrib-4: #39d353;
 
-  /* Layout */
+  /* Typography Scale */
+  --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+
+  /* Spacing Scale (Converted to rem for accessibility scaling) */
+  --space-xs: 0.25rem;  /* 4px */
+  --space-sm: 0.5rem;   /* 8px */
+  --space-md: 1rem;     /* 16px */
+  --space-lg: 1.5rem;   /* 24px */
+  --space-xl: 2.5rem;   /* 40px */
+
+  /* App Shell Layout Dimensions */
+  --topbar-primary-height: 56px;
+  --topbar-secondary-height: 44px;
+  --sidebar-width: 260px;
+
+  /* Borders & Radii */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+
+  /* Shadows & Transitions */
+  --shadow-panel: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms ease;
+}
+
+/*
+ GLOBAL RESETS & BASE STYLES
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+
+  /* Critical for SPA App Shells: Prevents the whole page from scrolling */
+  overflow: hidden;
+}
+
+/* Media Defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form & Interactive Resets */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* List Resets */
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Typography Resets */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+}
+
+/*
+    ACCESSIBILITY (a11y)
+    */
+/* Global focus state for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-easy);
+  outline-offset: 2px;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
