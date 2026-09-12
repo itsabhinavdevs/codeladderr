@@ -1,22 +1,10 @@
 import { setState } from "../state/store.js";
+import * as topbarPrimary from "../components/shell/topbar-primary.js";
+import * as topbarSecondary from "../components/shell/topbar-secondary.js";
+import * as sidebar from "../components/shell/sidebar.js";
+import * as footer from "../components/shell/footer.js";
 
-// section name -> mount(container, params) function.
-// Later phases register their real section components here; for Phase 1 only
-// a placeholder "dashboard" entry exists so the shell has something to render.
-const registry = new Map();
-
-registry.set("dashboard", {
-  mount(container) {
-    container.textContent = "Dashboard placeholder";
-  },
-  unmount() {},
-});
-
-const routeChangeCallbacks = new Set();
-let currentMountedSection = null;
-let containerEl = null;
-
-const VALID_SECTIONS = [
+const VALID_SECTIONS = new Set([
   "dashboard",
   "practice",
   "notes",
@@ -24,11 +12,41 @@ const VALID_SECTIONS = [
   "concepts",
   "learning",
   "revision",
-];
+]);
+
+// section name -> { mount(container, params), unmount?() }
+const sectionRegistry = new Map([
+  [
+    "dashboard",
+    {
+      mount(container) {
+        container.innerHTML = `<div class="dashboard-placeholder">Dashboard placeholder</div>`;
+      },
+      unmount() {},
+    },
+  ],
+]);
+
+const routeListeners = new Set();
+let currentMountedSection = null;
+let activeModule = null;
+let shellMounted = false;
+
+// Local dev (plain `npx serve .`) has no rewrite rules, so the real path is
+// /public/<page>. On Netlify, netlify.toml redirects "/" and "/login.html"
+// to their /public/ equivalents, so a root-relative path works there.
+// Deciding by hostname only (never by the current pathname) keeps this
+// correct no matter where the redirect is triggered from, including after
+// hash-based navigation has changed the visible URL.
+function getRedirectPath(page) {
+  const isLocalDev =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+  return isLocalDev ? `/public/${page}` : `/${page}`;
+}
 
 /**
  * Parses the current location.hash into { section, params }.
- * Hash shape: #section=<name>&sheetId=<id>&questionId=<id>
  */
 export function getCurrentRoute() {
   const raw = window.location.hash.replace(/^#/, "");
@@ -45,71 +63,124 @@ function buildHash(section, params = {}) {
   return `#${search.toString()}`;
 }
 
-function render(section, params) {
-  const entry = registry.get(section);
+/**
+ * Builds the persistent layout (navbars, sidebar, footer) if it doesn't exist yet.
+ */
+function ensureShellLayout(root) {
+  if (shellMounted) return;
 
-  if (!entry) {
-    // Later phases will have every section registered; for now, log and stop.
-    console.info(`[router] "${section}" is not implemented yet.`);
+  root.innerHTML = `
+    <div id="shell-topbar-primary"></div>
+    <div id="shell-topbar-secondary" hidden></div>
+    <div id="shell-sidebar"></div>
+    <main id="shell-main"><div id="section-content"></div></main>
+    <div id="shell-footer"></div>
+  `;
+
+  topbarPrimary.mount(document.getElementById("shell-topbar-primary"));
+  sidebar.mount(document.getElementById("shell-sidebar"));
+  footer.mount(document.getElementById("shell-footer"));
+  shellMounted = true;
+}
+
+/**
+ * Shows/hides the secondary topbar depending on the active section.
+ */
+function updateTopbarSecondary(section) {
+  const el = document.getElementById("shell-topbar-secondary");
+  if (!el) return;
+
+  if (section === "dashboard") {
+    el.hidden = false;
+    topbarSecondary.mount(el);
+  } else {
+    if (typeof topbarSecondary.unmount === "function") {
+      topbarSecondary.unmount();
+    }
+    el.hidden = true;
+    el.innerHTML = "";
+  }
+}
+
+/**
+ * Core rendering logic triggered by URL changes.
+ */
+function render(section, params) {
+  const root = document.getElementById("app-content");
+
+  if (!root) {
+    console.error("[router] Root element #app-content not found.");
     return;
   }
 
-  if (currentMountedSection && registry.has(currentMountedSection)) {
-    const prev = registry.get(currentMountedSection);
-    if (typeof prev.unmount === "function") prev.unmount();
+  // 1. Ensure layout exists and update contextual UI
+  ensureShellLayout(root);
+  updateTopbarSecondary(section);
+
+  // 2. Unmount previous section
+  if (activeModule && typeof activeModule.unmount === "function") {
+    activeModule.unmount();
   }
 
-  if (containerEl) {
-    entry.mount(containerEl, params);
+  // 3. Mount new section
+  const contentEl = document.getElementById("section-content");
+  const entry = sectionRegistry.get(section);
+
+  if (entry) {
+    entry.mount(contentEl, params);
+    activeModule = entry;
+  } else {
+    console.info(`[router] No component registered yet for section "${section}"`);
+    contentEl.innerHTML = "";
+    activeModule = null;
   }
+
+  // 4. Update state
   currentMountedSection = section;
   setState({ currentSection: section });
 }
 
 /**
- * Navigates to a section. "login" is a real page redirect (public/login.html),
- * not part of the in-app hash router.
+ * API to trigger a navigation event.
  */
-// Add this helper function
-//correct redirct link for local and production
-function getRedirectPath(page) {
-  const isLocalDev = window.location.pathname.includes('/public');
-  return isLocalDev ? `/public/${page}` : `/${page}`;
-}
-
 export function navigateTo(section, params = {}) {
   if (section === "login") {
     window.location.href = getRedirectPath("login.html");
     return;
   }
 
-  if (!VALID_SECTIONS.includes(section)) {
+  if (!VALID_SECTIONS.has(section)) {
     console.info(`[router] Unknown section "${section}".`);
     return;
   }
 
+  // By updating the hash, we trigger the 'hashchange' listener in initRouter.
+  // This ensures the back button and URL remain the source of truth.
   window.location.hash = buildHash(section, params);
-  // The hashchange listener (registered in initRouter) handles the actual render.
 }
 
 export function onRouteChange(callback) {
-  routeChangeCallbacks.add(callback);
-  return () => routeChangeCallbacks.delete(callback);
+  routeListeners.add(callback);
+  return () => routeListeners.delete(callback);
 }
 
 /**
- * Wires up the router to a container element and starts listening for hash
- * changes. Call once, from main.js, after the user is confirmed signed in.
+ * Initializes the router. Call this ONCE in your main.js after confirming user auth.
  */
-export function initRouter(container) {
-  containerEl = container;
-
+export function initRouter() {
   const handle = () => {
     const route = getCurrentRoute();
-    routeChangeCallbacks.forEach((cb) => cb(route));
+
+    // Only valid sections should be rendered
+    if (!VALID_SECTIONS.has(route.section) && route.section !== "dashboard") {
+      navigateTo("dashboard");
+      return;
+    }
+
+    routeListeners.forEach((cb) => cb(route));
     render(route.section, route.params);
   };
 
   window.addEventListener("hashchange", handle);
-  handle(); // render whatever route is already in the URL (or default to dashboard)
+  handle(); // Render current route immediately on load
 }
