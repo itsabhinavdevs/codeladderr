@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DSA Tracker</title>
+    <meta http-equiv="refresh" content="0; url=/public/login.html" />
+    <script>
+      // Netlify's netlify.toml already redirects "/" straight to
+      // /public/index.html in production (see the forced redirect rule
+      // there). This file only matters for plain local dev with no rewrite
+      // engine (e.g. `npx serve .`), where visiting "/" would otherwise show
+      // a directory listing. Land on login.html; its own auth check bounces
+      // straight to the dashboard if you're already signed in.
+      window.location.replace("/public/login.html");
+    </script>
+  </head>
+  <body></body>
+</html>
