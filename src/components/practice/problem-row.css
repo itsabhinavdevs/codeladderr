@@ -1,0 +1,122 @@
+/* src/components/practice/problem-row.css
+   Grid columns must match .sheet-view__table-head exactly so header/rows align. */
+
+.problem-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px 90px 64px 90px 100px;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px var(--space-md);
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.problem-row:hover {
+  background: var(--color-badge-bg);
+}
+
+.problem-row--highlight {
+  background: var(--color-progress-panel-bg);
+  outline: 1px solid var(--color-hub-accent-1);
+  outline-offset: -1px;
+}
+
+.problem-row__cell {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.problem-row__cell--resource,
+.problem-row__cell--practice,
+.problem-row__cell--note,
+.problem-row__cell--revision,
+.problem-row__cell--difficulty {
+  justify-content: center;
+}
+
+.problem-row__check-label {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: var(--space-sm);
+}
+
+.problem-row__check {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-hub-accent-1);
+  cursor: pointer;
+}
+
+.problem-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.problem-row__title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.problem-row__pattern {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.problem-row__dash {
+  color: var(--color-text-secondary);
+}
+
+.problem-row__icon-link,
+.problem-row__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}
+
+.problem-row__icon-link:hover,
+.problem-row__icon-btn:hover,
+.problem-row__icon-link:focus-visible,
+.problem-row__icon-btn:focus-visible {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
+}
+
+.problem-row__revision-btn--active {
+  color: var(--color-hub-accent-1);
+  border-color: var(--color-hub-accent-1);
+}
+
+.problem-row__difficulty-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--pill-color);
+  background: color-mix(in srgb, var(--pill-color) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pill-color) 40%, transparent);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .problem-row {
+    grid-template-columns: minmax(0, 1fr) 40px 40px 40px 40px 84px;
+  }
+  .problem-row__pattern {
+    display: none;
+  }
+}

@@ -1,0 +1,113 @@
+/* src/components/practice/pattern-sidebar.css */
+
+.pattern-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+  min-height: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.pattern-sidebar__heading {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.pattern-sidebar__search {
+  padding: 10px 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.pattern-sidebar__search::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.pattern-sidebar__heading,
+.pattern-sidebar__search {
+  flex-shrink: 0;
+}
+
+.pattern-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.pattern-sidebar__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.pattern-sidebar__item:hover {
+  background: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.pattern-sidebar__item--active {
+  background: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.pattern-sidebar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pattern-sidebar__label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pattern-sidebar__item--active .pattern-sidebar__label {
+  color: var(--color-text-primary);
+}
+
+.pattern-sidebar__sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.pattern-sidebar__badge {
+  flex-shrink: 0;
+  min-width: 32px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--color-badge-bg);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-align: center;
+}
+
+.pattern-sidebar__item--active .pattern-sidebar__badge {
+  color: var(--color-text-primary);
+}

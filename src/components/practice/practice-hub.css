@@ -1,0 +1,253 @@
+/* src/components/practice/practice-hub.css
+   Uses tokens from src/styles/tokens.css. No hardcoded colors — every value
+   below references a CSS variable. */
+
+.practice-hub {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* ---------- Hero ---------- */
+
+.practice-hub__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.practice-hub__glow {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-card);
+  border: 1px solid var(--color-hub-accent-1);
+  box-shadow: 0 0 32px 4px rgba(245, 185, 66, 0.35);
+}
+
+.practice-hub__rocket {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.practice-hub__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.practice-hub__badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-hub-accent-3);
+}
+
+.practice-hub__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.practice-hub__title-accent {
+  color: var(--color-hub-accent-1);
+}
+
+.practice-hub__subtitle {
+  margin: 0;
+  max-width: 480px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.practice-hub__goal-slot {
+  width: 100%;
+}
+
+.practice-hub__goal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-alert-bg);
+  border: 1px solid var(--color-alert-border);
+  text-align: left;
+}
+
+.practice-hub__goal-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-alert-icon-bg);
+  color: var(--color-hard);
+  font-weight: 700;
+}
+
+.practice-hub__goal-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.practice-hub__goal-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-hard);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.practice-hub__goal-sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.practice-hub__goal-cta {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--color-hard);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.practice-hub__goal-cta:hover,
+.practice-hub__goal-cta:focus-visible {
+  filter: brightness(1.1);
+}
+
+/* ---------- Search ---------- */
+
+.practice-hub__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  border: 1px solid var(--color-focus-glow);
+}
+
+.practice-hub__search-icon {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.practice-hub__search-input {
+  flex: 1;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+}
+
+.practice-hub__search-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.practice-hub__search:focus-within {
+  box-shadow: 0 0 0 3px var(--color-focus-glow);
+}
+
+/* ---------- Sheet list ---------- */
+
+.practice-hub__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.practice-hub__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 20px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--card-accent, var(--color-hub-accent-1));
+  border-radius: var(--radius-md);
+  text-align: left;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.practice-hub__card:hover,
+.practice-hub__card:focus-visible {
+  border-color: var(--color-text-secondary);
+  border-left-color: var(--card-accent, var(--color-hub-accent-1));
+  transform: translateY(-2px);
+}
+
+.practice-hub__logo {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.practice-hub__card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.practice-hub__name {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.practice-hub__desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.practice-hub__arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+.practice-hub__card:hover .practice-hub__arrow,
+.practice-hub__card:focus-visible .practice-hub__arrow {
+  background: var(--card-accent, var(--color-hub-accent-1));
+  color: var(--color-bg);
+}
