@@ -1,0 +1,95 @@
+.long-term-goal-card h3 {
+  color: var(--color-text-primary);
+  margin: 0 0 12px;
+}
+
+.long-term-goal-card__list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.long-term-goal-card__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-bg);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.long-term-goal-card__item--completed .long-term-goal-card__text {
+  text-decoration: line-through;
+  color: var(--color-text-secondary);
+}
+
+.long-term-goal-card__text {
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.long-term-goal-card__due {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+.long-term-goal-card__empty {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.long-term-goal-card__add-btn {
+  background: none;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.long-term-goal-card__add-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.long-term-goal-card__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.long-term-goal-card__text-input,
+.long-term-goal-card__date-input {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.long-term-goal-card__text-input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.long-term-goal-card__save-btn {
+  background-color: var(--color-easy);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.long-term-goal-card__cancel-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
