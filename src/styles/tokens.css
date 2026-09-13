@@ -54,6 +54,23 @@
   /* Neutral badge background used for small counters/pills on dark surfaces */
   --color-badge-bg: rgba(255, 255, 255, 0.06);
 
+  /* Notes dashboard — its own slightly darker/cooler palette, per spec.
+     Label uses the existing teal hub accent instead of green (green stays
+     reserved for the contribution graph). */
+  --color-notes-bg: #0d0f10;
+  --color-notes-card: #1a1d1f;
+  --color-notes-card-hover: #202426;
+  --color-notes-border: #2a2e30;
+  --color-notes-badge: #f59e0b;
+  --color-notes-badge-text: #1a1a1a;
+  --color-notes-label: var(--color-hub-accent-3);
+  --color-notes-glow: rgba(245, 158, 11, 0.35);
+
+  /* Concepts board — EXPLICIT, SECTION-SCOPED EXCEPTION to the "green is only
+     for the contribution graph" rule, per direct user instruction for this
+     section only. Do not reuse this token anywhere else. */
+  --color-concepts-learned-green: #22c55e;
+
   /* Typography Scale */
   --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-size-xs: 0.75rem;
