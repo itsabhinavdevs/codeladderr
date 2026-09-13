@@ -41,10 +41,11 @@ const PLAY_ICON = `
  *   sheetId: string,
  *   onTickChange: (v:boolean) => void,
  *   onRevisionChange: (v:boolean) => void,
- *   onNotesClick: () => void
+ *   onNotesClick: () => void,
+ *   onTitleClick?: () => void
  * }} options
  */
-export function render(problem, { ticked, revision, sheetId, onTickChange, onRevisionChange, onNotesClick }) {
+export function render(problem, { ticked, revision, sheetId, onTickChange, onRevisionChange, onNotesClick, onTitleClick }) {
   ensureStyle("/src/components/practice/problem-row.css");
 
   const row = document.createElement("div");
@@ -56,7 +57,11 @@ export function render(problem, { ticked, revision, sheetId, onTickChange, onRev
         <input type="checkbox" class="problem-row__check" ${ticked ? "checked" : ""} />
       </label>
       <span class="problem-row__text">
-        <span class="problem-row__title">${problem.title}</span>
+        ${
+          onTitleClick
+            ? `<button type="button" class="problem-row__title problem-row__title--link">${problem.title}</button>`
+            : `<span class="problem-row__title">${problem.title}</span>`
+        }
         <span class="problem-row__pattern">${labelFromPatternId(problem.patternId)}</span>
       </span>
     </span>
@@ -93,6 +98,10 @@ export function render(problem, { ticked, revision, sheetId, onTickChange, onRev
       )}">${problem.difficulty}</span>
     </span>
   `;
+
+  if (onTitleClick) {
+    row.querySelector(".problem-row__title--link").addEventListener("click", onTitleClick);
+  }
 
   const checkbox = row.querySelector(".problem-row__check");
   checkbox.addEventListener("change", async () => {

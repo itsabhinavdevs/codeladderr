@@ -1,0 +1,54 @@
+/* src/components/practice/problem-table.css
+   Shared table shell (head + scrollable rows + empty state) used by both
+   sheet-view.js (Practice) and revision-view.js (Revision), so the two never
+   drift out of sync visually. Row content itself is problem-row.css/.js. */
+
+.problem-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.problem-table__head {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px 90px 64px 90px 100px;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.problem-table__head span:not(:first-child) {
+  text-align: center;
+}
+
+.problem-table__rows {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.problem-table__empty {
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 900px) {
+  .problem-table__head {
+    display: none;
+  }
+}

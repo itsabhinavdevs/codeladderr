@@ -62,6 +62,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
+}
+
+.problem-row__title--link {
+  cursor: pointer;
+}
+
+.problem-row__title--link:hover,
+.problem-row__title--link:focus-visible {
+  color: var(--color-hub-accent-1);
+  text-decoration: underline;
 }
 
 .problem-row__pattern {

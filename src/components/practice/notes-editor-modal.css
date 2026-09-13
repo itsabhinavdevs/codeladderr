@@ -15,8 +15,8 @@
   width: min(560px, 100%);
   max-height: 85vh;
   overflow-y: auto;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 20px;
 }
@@ -31,13 +31,13 @@
 .notes-modal__title {
   margin: 0;
   font-size: 16px;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .notes-modal__close {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   font-size: 20px;
   cursor: pointer;
 }
@@ -45,7 +45,7 @@
 .notes-modal__field {
   margin-bottom: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--color-border);
 }
 .notes-modal__field:last-child {
   border-bottom: none;
@@ -56,16 +56,16 @@
   margin-bottom: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .notes-modal__textarea {
   width: 100%;
   resize: vertical;
-  background: var(--bg, #1a1a1a);
-  border: 1px solid var(--border);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   padding: 8px;
   font-family: inherit;
   font-size: 13px;
@@ -88,13 +88,13 @@
 
 .notes-modal__cancel {
   background: none;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .notes-modal__save {
-  background: var(--difficulty-easy, #3b82f6);
-  border: 1px solid var(--difficulty-easy, #3b82f6);
+  background: var(--color-easy);
+  border: 1px solid var(--color-easy);
   color: #fff;
 }
 
@@ -102,5 +102,5 @@
   display: inline-block;
   margin-top: 4px;
   font-size: 11px;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }

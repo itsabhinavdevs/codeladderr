@@ -115,12 +115,12 @@ function patternOptionsMarkup() {
 }
 
 function renderRows(container) {
-  const list = container.querySelector(".sheet-view__rows");
+  const list = container.querySelector(".problem-table__rows");
   const rows = visibleProblems();
   list.innerHTML = "";
 
   if (!rows.length) {
-    list.innerHTML = `<div class="sheet-view__empty">No questions match this view.</div>`;
+    list.innerHTML = `<div class="problem-table__empty">No questions match this view.</div>`;
   } else {
     rows.forEach((problem) => {
       const rowEl = problemRow.render(problem, {
@@ -137,6 +137,7 @@ function renderRows(container) {
           if (activeTab === "revision") renderRows(container);
         },
         onNotesClick: () => notesModal.open(problem, currentSheetId),
+        onTitleClick: () => navigateTo("practice", { sheetId: currentSheetId, questionId: problem.id }),
       });
       list.appendChild(rowEl);
     });
@@ -158,6 +159,7 @@ function refreshSummaries(container) {
 
 export async function mount(container, params = {}) {
   ensureStyle("/src/components/practice/sheet-view.css");
+  ensureStyle("/src/components/practice/problem-table.css");
   rootEl = container;
   currentSheetId = params.sheetId;
   activeTab = "all";
@@ -202,8 +204,8 @@ export async function mount(container, params = {}) {
 
       <div class="sheet-view__body">
         <aside class="sheet-view__sidebar" data-pattern-sidebar></aside>
-        <div class="sheet-view__table">
-          <div class="sheet-view__table-head">
+        <div class="problem-table">
+          <div class="problem-table__head">
             <span>Question</span>
             <span>Resource</span>
             <span>Practice</span>
@@ -211,7 +213,7 @@ export async function mount(container, params = {}) {
             <span>Revision</span>
             <span>Difficulty</span>
           </div>
-          <div class="sheet-view__rows" aria-live="polite"></div>
+          <div class="problem-table__rows" aria-live="polite"></div>
         </div>
       </div>
     </section>

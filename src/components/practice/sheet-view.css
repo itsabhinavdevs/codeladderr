@@ -242,50 +242,6 @@
   overflow: hidden;
 }
 
-.sheet-view__table {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 0;
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-
-.sheet-view__table-head {
-  flex-shrink: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 90px 90px 64px 90px 100px;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.sheet-view__table-head span:not(:first-child) {
-  text-align: center;
-}
-
-.sheet-view__rows {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.sheet-view__empty {
-  padding: var(--space-xl);
-  text-align: center;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-}
-
 @media (max-width: 900px) {
   .sheet-view__body {
     display: flex;
@@ -297,11 +253,8 @@
     overflow-y: auto;
     flex-shrink: 0;
   }
-  .sheet-view__table {
+  .problem-table {
     flex: 1;
     min-height: 0;
-  }
-  .sheet-view__table-head {
-    display: none;
   }
 }
