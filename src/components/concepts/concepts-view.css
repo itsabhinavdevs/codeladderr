@@ -1,0 +1,280 @@
+/* src/components/concepts/concepts-view.css */
+
+.concepts-view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--space-lg);
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+
+.concepts-view__header {
+  flex-shrink: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.concepts-view__eyebrow {
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-hub-accent-3);
+}
+
+.concepts-view__heading {
+  margin: 4px 0 4px;
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.concepts-view__subtitle {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Board ---------- */
+
+.concepts-view__board {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+@media (max-width: 720px) {
+  .concepts-view__board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.concepts-view__column {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.concepts-view__column-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.concepts-view__column-title {
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.concepts-view__column-title--yellow {
+  color: var(--color-medium);
+}
+
+/* Explicit exception: green is normally reserved for the contribution graph.
+   Used here only because the user asked for it specifically for this board. */
+.concepts-view__column-title--green {
+  color: var(--color-concepts-learned-green);
+}
+
+/* ---------- Add-concept control ---------- */
+
+.concepts-view__add-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.concepts-view__add-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-medium);
+  color: var(--color-medium);
+  background: transparent;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.concepts-view__add-btn:hover,
+.concepts-view__add-btn:focus-visible {
+  background: color-mix(in srgb, var(--color-medium) 16%, transparent);
+}
+
+.concepts-view__tooltip {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  z-index: 5;
+}
+
+.concepts-view__add-wrap:hover .concepts-view__tooltip {
+  opacity: 1;
+}
+
+.concepts-view__popover {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  display: flex;
+  gap: 6px;
+  padding: var(--space-sm);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-panel);
+  z-index: 10;
+}
+.concepts-view__popover[hidden] {
+  display: none;
+}
+
+
+.concepts-view__popover-input {
+  width: 180px;
+  padding: 8px 10px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.concepts-view__popover-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.concepts-view__popover-add {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-medium);
+  color: var(--color-bg);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.concepts-view__popover-add:hover,
+.concepts-view__popover-add:focus-visible {
+  filter: brightness(1.08);
+}
+
+/* ---------- Cards / drop zone ---------- */
+
+.concepts-view__cards {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--space-md);
+  transition: background var(--transition-fast);
+}
+
+.concepts-view__cards--drop-hover {
+  background: var(--color-badge-bg);
+  outline: 2px dashed var(--color-border);
+  outline-offset: -6px;
+}
+
+.concepts-view__empty {
+  padding: var(--space-lg);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.concepts-view__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 12px 14px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: grab;
+  transition: border-color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.concepts-view__card:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.concepts-view__card--dragging {
+  opacity: 0.4;
+}
+
+.concepts-view__card-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.concepts-view__card-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.concepts-view__modify-btn,
+.concepts-view__delete-btn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.concepts-view__modify-btn:hover,
+.concepts-view__delete-btn:hover,
+.concepts-view__modify-btn:focus-visible,
+.concepts-view__delete-btn:focus-visible {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
+}
+
+.concepts-view__delete-btn {
+  color: var(--color-hard);
+  border-color: var(--color-hard);
+}
+
+.concepts-view__delete-btn:hover,
+.concepts-view__delete-btn:focus-visible {
+  background: color-mix(in srgb, var(--color-hard) 14%, transparent);
+  color: var(--color-hard);
+}
