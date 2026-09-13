@@ -99,6 +99,8 @@ function renderHub(container) {
       </div>
 
       <div class="practice-hub__list" role="list"></div>
+
+
     </section>
   `;
 
