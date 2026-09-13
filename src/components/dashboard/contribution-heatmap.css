@@ -1,0 +1,42 @@
+.contribution-heatmap {
+  overflow-x: auto;
+}
+
+.contribution-heatmap__grid {
+  display: flex;
+  gap: 3px;
+}
+
+.contribution-heatmap__week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.contribution-heatmap__cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background-color: var(--color-border);
+}
+
+.contribution-heatmap__cell--level-1 {
+  background-color: var(--color-contrib-1);
+}
+
+.contribution-heatmap__cell--level-2 {
+  background-color: var(--color-contrib-2);
+}
+
+.contribution-heatmap__cell--level-3 {
+  background-color: var(--color-contrib-3);
+}
+
+.contribution-heatmap__cell--level-4 {
+  background-color: var(--color-contrib-4);
+}
+
+.contribution-heatmap__loading {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
