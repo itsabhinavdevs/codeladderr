@@ -62,6 +62,15 @@ export async function setSubDoc(uid, subcollection, docId, data, merge = true) {
     throw err;
   }
 }
+export async function deleteSubDoc(uid, subcollection, docId) {
+  if (!uid || !subcollection || !docId) return;
+  try {
+    await deleteDoc(doc(db, "users", uid, subcollection, docId));
+  } catch (err) {
+    console.error(`[DB Error] Failed to delete sub-document ${docId}:`, err);
+    throw err;
+  }
+}
 
 export async function getAllSubDocs(uid, subcollection) {
   if (!uid || !subcollection) return [];
