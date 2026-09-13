@@ -4,6 +4,12 @@ import * as topbarSecondary from "../components/shell/topbar-secondary.js";
 import * as sidebar from "../components/shell/sidebar.js";
 import * as footer from "../components/shell/footer.js";
 import * as practiceHub from "../components/practice/practice-hub.js";
+import * as notesView from "../components/notes/notes-view.js";
+import * as roadmapView from "../components/roadmap/roadmap-view.js";
+import * as conceptsView from "../components/concepts/concepts-view.js";
+import * as learningView from "../components/learning/learning-view.js";
+import * as revisionView from "../components/revision/revision-view.js";
+import * as dashboard from "../components/dashboard/dashboard.js";
 
 const VALID_SECTIONS = new Set([
   "dashboard",
@@ -19,16 +25,31 @@ const VALID_SECTIONS = new Set([
 const sectionRegistry = new Map([
   [
     "dashboard",
-    {
-      mount(container) {
-        container.innerHTML = `<div class="dashboard-placeholder">Dashboard placeholder</div>`;
-      },
-      unmount() {},
-    },
+    dashboard
   ],
   [
     "practice",
     practiceHub
+  ],
+  [
+    "notes",
+    notesView
+  ],
+  [
+    "roadmap",
+    roadmapView
+  ],
+  [
+    "concepts",
+    conceptsView
+  ],
+  [
+    "learning",
+    learningView
+  ],
+  [
+    "revision",
+    revisionView
   ],
 ]);
 
@@ -129,6 +150,7 @@ function render(section, params) {
 
   // 3. Mount new section
   const contentEl = document.getElementById("section-content");
+  contentEl.innerHTML = "";
   const entry = sectionRegistry.get(section);
 
   if (entry) {
