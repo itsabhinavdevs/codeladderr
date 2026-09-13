@@ -251,3 +251,72 @@
   background: var(--card-accent, var(--color-hub-accent-1));
   color: var(--color-bg);
 }
+
+/* ---------- Footer ---------- */
+
+.practice-hub__footer {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-top: 105px;
+  padding-bottom: 24px;
+  color: #8b8d9d;
+  text-align: center;
+}
+
+.practice-hub__footer > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #f2ad21;
+}
+
+.practice-hub__footer i {
+  display: block;
+  width: 100px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: #505463;
+  opacity: 0.85;
+}
+
+.practice-hub__footer span {
+  display: inline-block;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: #f59e0b;
+  animation: practice-hub-star-pulse 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes practice-hub-star-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+    filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.3));
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.95));
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+    filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.3));
+  }
+}
+
+.practice-hub__footer strong {
+  color: #c2c3ce;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.practice-hub__footer small {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
