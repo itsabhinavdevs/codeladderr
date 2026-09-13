@@ -1,0 +1,113 @@
+.today-goal-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.today-goal-card__header h3 {
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.today-goal-card__history-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.today-goal-card__history-btn:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
+}
+
+.today-goal-card__list {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.today-goal-card__item {
+  color: var(--color-text-primary);
+  padding: 8px 10px;
+  background-color: var(--color-bg);
+  border-radius: 6px;
+}
+
+.today-goal-card__empty {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.today-goal-card__add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.today-goal-card__add-btn {
+  background: none;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.today-goal-card__add-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.today-goal-card__input-wrap {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.today-goal-card__input {
+  flex: 1;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.today-goal-card__set-btn {
+  background-color: var(--color-easy);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.today-goal-card__history-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.today-goal-card__history-close {
+  align-self: flex-end;
+  margin-right: 10%;
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
