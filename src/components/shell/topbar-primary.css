@@ -31,11 +31,37 @@
   filter: invert(1);
 }
 
+.topbar-primary__logo-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .topbar-primary__logo-btn img {
   height: 28px;
   width: 28px;
   border-radius: var(--radius-sm);
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+.topbar-primary__brand-name {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-topbar-text);
+  white-space: nowrap;
+}
+
+.topbar-primary__brand-name b {
+  font-weight: 800;
+  color: var(--color-easy);
+}
+
+@media (max-width: 480px) {
+  .topbar-primary__brand-name {
+    display: none;
+  }
 }
 
 .topbar-primary__spacer {

@@ -1,4 +1,5 @@
 import { navigateTo } from "../../router/router.js";
+import { getState, subscribe } from "../../state/store.js";
 
 const TABS = [
   { id: "practice", label: "Practice" },
@@ -10,13 +11,20 @@ const TABS = [
 ];
 
 let container = null;
+let unsubscribe = null;
 
-export function mount(el) {
-  container = el;
+function render() {
+  if (!container) return;
+  const { currentSection } = getState();
+
   container.innerHTML = `
     <nav class="topbar-secondary">
       ${TABS.map(
-        (tab) => `<button class="topbar-secondary__tab" data-section="${tab.id}">${tab.label}</button>`
+        (tab) =>
+          `<button
+            class="topbar-secondary__tab${tab.id === currentSection ? " topbar-secondary__tab--active" : ""}"
+            data-section="${tab.id}"
+          >${tab.label}</button>`
       ).join("")}
     </nav>
   `;
@@ -26,7 +34,15 @@ export function mount(el) {
   });
 }
 
+export function mount(el) {
+  container = el;
+  render();
+  unsubscribe = subscribe(() => render());
+}
+
 export function unmount() {
+  if (unsubscribe) unsubscribe();
+  unsubscribe = null;
   if (container) container.innerHTML = "";
   container = null;
 }

@@ -19,6 +19,7 @@ function render() {
       </button>
       <button class="topbar-primary__logo-btn" id="logo-btn" aria-label="Go to dashboard">
         <img src="/public/assets/logos/logo.jpg" alt="DSA Tracker" />
+        <span class="topbar-primary__brand-name">DSA <b>Tracker</b></span>
       </button>
       <div class="topbar-primary__spacer"></div>
       <div class="topbar-primary__streak" aria-label="${streak}-day streak">

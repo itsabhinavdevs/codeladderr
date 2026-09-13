@@ -22,3 +22,9 @@
   color: var(--color-text-primary);
   border-bottom-color: var(--color-border);
 }
+
+.topbar-secondary__tab--active {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  border-bottom-color: var(--color-easy);
+}
