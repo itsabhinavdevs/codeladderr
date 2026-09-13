@@ -1,0 +1,35 @@
+/* src/components/revision/revision-view.css
+   Page chrome only — the table itself is problem-table.css + problem-row.css,
+   shared with Practice's sheet-view. */
+
+.revision-view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--space-lg);
+  overflow: hidden;
+}
+
+.revision-view__header {
+  flex-shrink: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.revision-view__heading {
+  margin: 0 0 4px;
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.revision-view__subtitle {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.revision-view .problem-table {
+  flex: 1;
+  min-height: 0;
+}
