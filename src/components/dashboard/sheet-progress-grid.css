@@ -1,0 +1,96 @@
+.sheet-progress-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sheet-progress-grid__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-bg);
+}
+
+.sheet-progress-grid__block--clickable {
+  cursor: pointer;
+}
+
+.sheet-progress-grid__block--clickable:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.sheet-progress-grid__logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.sheet-progress-grid__title {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.sheet-progress-grid__subcards {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sheet-progress-grid__subcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--color-bg);
+  font-weight: 600;
+}
+
+.sheet-progress-grid__subcard--easy {
+  background-color: var(--color-easy);
+}
+
+.sheet-progress-grid__subcard--medium {
+  background-color: var(--color-medium);
+}
+
+.sheet-progress-grid__subcard--hard {
+  background-color: var(--color-hard);
+}
+
+.sheet-progress-grid__others {
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.sheet-progress-grid__others--faded {
+  opacity: 0.55;
+}
+
+.sheet-progress-grid__others:hover {
+  opacity: 0.85;
+}
+
+.sheet-progress-grid__others-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+}
+.sheet-progress-grid__others-detail[hidden] {
+  display: none;
+}
+
+
+.sheet-progress-grid__loading {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
