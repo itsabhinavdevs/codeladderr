@@ -1,0 +1,157 @@
+/* src/components/notes/notes-view.css — fully fluid version */
+
+.notes-view {
+  height: 100%;
+  overflow-y: auto;
+  /* cancel the ~24px wrapper padding on all sides */
+  margin: -24px;
+  /* now your own fluid padding controls the real spacing */
+  padding: clamp(24px, 3.5vw, 56px) clamp(20px, 4vw, 72px) clamp(40px, 5vw, 72px);
+  background: var(--color-notes-bg);
+  min-height: 100vh;
+}
+
+
+/* ---------- Header ---------- */
+
+.notes-view__header {
+  /* no max-width — fills the padded area, edges always align with grid */
+  margin: 0 auto clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notes-view__label {
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-notes-label);
+}
+
+.notes-view__heading {
+  margin: 0;
+  /* fluid heading: 28px on phone → 44px on 4K */
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.notes-view__subtitle {
+  margin: 0;
+  font-size: clamp(13px, 1.2vw, 16px);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+/* ---------- Grid (fluid — no media queries needed) ---------- */
+
+.notes-view__grid {
+  margin: 0 auto;
+  display: grid;
+  /* was min(260px, 100%) → now 340px minimum = larger cards */
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: clamp(18px, 1.8vw, 28px);
+}
+
+/* ---------- Card ---------- */
+
+.notes-view__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.8vw, 22px);
+  padding: clamp(26px, 2.4vw, 36px);      /* more breathing room inside */
+  min-height: clamp(180px, 16vw, 230px);  /* much taller cards */
+  background: var(--color-notes-card);
+  border: 1px solid var(--color-notes-border);
+  border-radius: clamp(12px, 1.2vw, 16px);
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+/* amber glow that fades in from the top on hover */
+.notes-view__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 80% at 50% 0%,
+    var(--color-notes-glow),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.notes-view__card:hover,
+.notes-view__card:focus-visible {
+  background: var(--color-notes-card-hover);
+  border-color: var(--color-notes-badge);
+  box-shadow: 0 0 0 1px var(--color-notes-badge), 0 0 28px var(--color-notes-glow);
+  transform: translateY(-3px);
+}
+
+.notes-view__card:hover::before,
+.notes-view__card:focus-visible::before {
+  opacity: 0.5;
+}
+
+.notes-view__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-width: 48px;
+  height: 36px;              /* was 32px */
+  padding: 0 14px;
+  border-radius: 9px;
+  background: var(--color-notes-badge);
+  color: var(--color-notes-badge-text);
+  font-size: 14px;           /* was xs (~12px) */
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+
+.notes-view__title {
+  font-size: clamp(18px, 1.6vw, 23px);   /* was ~15–19px */
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.35;
+}
+
+.notes-view__footer {
+  margin-top: auto;
+  font-size: clamp(13px, 1.1vw, 15px);   /* was xs */
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition-fast);
+}
+
+.notes-view__footer::after {
+  content: "→";
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.notes-view__card:hover .notes-view__footer,
+.notes-view__card:focus-visible .notes-view__footer {
+  color: var(--color-notes-badge);
+}
+
+.notes-view__card:hover .notes-view__footer::after,
+.notes-view__card:focus-visible .notes-view__footer::after {
+  opacity: 1;
+  transform: translateX(0);
+}
