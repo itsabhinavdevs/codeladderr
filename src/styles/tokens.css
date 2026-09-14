@@ -13,7 +13,7 @@
   --color-text-secondary: #8a8a8a;
 
   /* Top bars */
-  --color-topbar-bg: #000000;
+  --color-topbar-bg: #0000002c;
   --color-topbar-text: #ffffff;
   --color-topbar-hover: #d4d4d4;
 
@@ -28,6 +28,9 @@
   --color-contrib-2: #006d32;
   --color-contrib-3: #26a641;
   --color-contrib-4: #39d353;
+
+  /* change ladder color to green */
+  --color-brand-accent: #22c55e;
 
   /* Hub accents — decorative only (badges, card left-bars). Never used for
      difficulty and never green, since green is reserved for the contribution
