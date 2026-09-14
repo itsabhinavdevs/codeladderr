@@ -11,7 +11,7 @@
   --color-text-secondary: #5a5a5a;
 
   /* Top bars stay black/white in both themes, per the GeeksforGeeks-style spec. */
-  --color-topbar-bg: #000000;
+  --color-topbar-bg: #0000002c;
   --color-topbar-text: #ffffff;
   --color-topbar-hover: #d0d0d0;
 }
