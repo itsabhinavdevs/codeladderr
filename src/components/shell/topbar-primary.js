@@ -3,6 +3,8 @@ import { navigateTo } from "../../router/router.js";
 import * as sidebar from "./sidebar.js";
 import * as searchOverlay from "./search-overlay.js";
 import * as profileDropdown from "./profile-dropdown.js";
+import * as notificationsDropdown from "./notifications-dropdown.js";
+import { LADDER_LOGO_SVG } from "./ladder-logo.js";
 
 let container = null;
 let unsubscribe = null;
@@ -10,7 +12,7 @@ let overlaysMounted = false;
 
 function render() {
   if (!container) return;
-  const { user, streak } = getState();
+  const { user, streak, hasUnreadNotifications } = getState();
 
   container.innerHTML = `
     <header class="topbar-primary">
@@ -18,15 +20,15 @@ function render() {
         <img src="/public/assets/icons/hamburger.svg" alt="" />
       </button>
       <button class="topbar-primary__logo-btn" id="logo-btn" aria-label="Go to dashboard">
-        <img src="/public/assets/logos/logo.jpg" alt="DSA Tracker" />
-        <span class="topbar-primary__brand-name">DSA <b>Tracker</b></span>
+        ${LADDER_LOGO_SVG}
+        <span class="topbar-primary__brand-name">CODE <b>Ladderr</b></span>
       </button>
       <div class="topbar-primary__spacer"></div>
       <div class="topbar-primary__streak" aria-label="${streak}-day streak">
         <img src="/public/assets/icons/flame.svg" alt="" />
         <span>${streak}</span>
       </div>
-      <button class="topbar-primary__icon-btn" id="bell-btn" aria-label="Notifications">
+      <button class="topbar-primary__icon-btn${hasUnreadNotifications ? " has-unread" : ""}" id="bell-btn" aria-label="Notifications">
         <img src="/public/assets/icons/bell.svg" alt="" />
       </button>
       <button class="topbar-primary__icon-btn" id="search-btn" aria-label="Search">
@@ -44,9 +46,8 @@ function render() {
 
   container.querySelector("#hamburger-btn").addEventListener("click", () => sidebar.toggle());
   container.querySelector("#logo-btn").addEventListener("click", () => navigateTo("dashboard"));
-  container.querySelector("#bell-btn").addEventListener("click", () => {
-    // No dropdown content yet — notifications is a root collection with no
-    // per-user unread state built out until Phase 6 wires real data.
+  container.querySelector("#bell-btn").addEventListener("click", (event) => {
+    notificationsDropdown.toggle(event.currentTarget);
   });
   container.querySelector("#search-btn").addEventListener("click", () => searchOverlay.toggle());
   container.querySelector("#profile-btn").addEventListener("click", (event) => {
@@ -69,6 +70,11 @@ export function mount(el) {
     profileRoot.id = "profile-dropdown-root";
     document.body.appendChild(profileRoot);
     profileDropdown.mount(profileRoot);
+
+    const notificationsRoot = document.createElement("div");
+    notificationsRoot.id = "notifications-dropdown-root";
+    document.body.appendChild(notificationsRoot);
+    notificationsDropdown.mount(notificationsRoot);
 
     overlaysMounted = true;
   }

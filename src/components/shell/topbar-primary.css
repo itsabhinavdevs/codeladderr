@@ -37,9 +37,10 @@
   gap: 10px;
 }
 
-.topbar-primary__logo-btn img {
-  height: 28px;
-  width: 28px;
+.topbar-primary__logo-btn img,
+.topbar-primary__logo-btn svg.ladder-logo {
+  height: 40px;
+  width: 40px;
   border-radius: var(--radius-sm);
   object-fit: cover;
   flex-shrink: 0;
@@ -55,7 +56,7 @@
 
 .topbar-primary__brand-name b {
   font-weight: 800;
-  color: var(--color-easy);
+  color: var(--color-brand-accent);
 }
 
 @media (max-width: 480px) {
