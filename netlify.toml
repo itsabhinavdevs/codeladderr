@@ -6,6 +6,12 @@
 [build]
   publish = "."
 
+
+[[headers]]
+  for = "/src/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
 [[redirects]]
   from = "/"
   to = "/public/index.html"
@@ -22,6 +28,7 @@
   from = "/login.html"
   to = "/public/login.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/assets/*"
