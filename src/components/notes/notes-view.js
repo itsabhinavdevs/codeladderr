@@ -13,14 +13,15 @@ function ensureStyle(href) {
 
 // Static note set. TODO: replace each href with your real Google Drive / Notion link.
 const NOTES = [
-  { badge: "C++", title: "C++ Notes", href: "#" },
-  { badge: "DSA", title: "C++ DSA by Love Babbar", href: "#" },
-  { badge: "Algo", title: "Algorithm DSA by Abdul Bari", href: "#" },
-  { badge: "OS", title: "Operating Systems", href: "#" },
-  { badge: "DB", title: "Database Management Systems", href: "#" },
-  { badge: "Java", title: "Java Core Concepts", href: "#" },
-  { badge: "1", title: "System Design Basics", href: "#" },
-  { badge: "2", title: "Interview Preparation Kit", href: "#" },
+  { badge: "C++", title: "C++ Notes", href: "https://app.notion.com/p/C-Notes-2425e71de6028084a5bec0c835fed7d8", cta: "Open in Notion" },
+  { badge: "DSA", title: "C++ DSA by Love Babbar", href: "https://drive.google.com/file/d/1XIvpJxElA2Ka_JIWtT_m_UUvTFe4ThvO/view", cta: "Open in Drive" },
+  { badge: "Algo", title: "Algorithm DSA by Abdul Bari", href: "https://drive.google.com/drive/folders/14_FJy4KWCCP7mSuC1G0mak3ORZPVj1Oo", cta: "Open in Drive" },
+  { badge: "180", title: "Striver DSA 180 sheet Notes", href: "https://drive.google.com/drive/folders/1KijWBHOwW57dHg1Wr2plVwX-YajtIVVE", cta: "Open in Drive" },
+  { badge: "DSA", title: "Striver DSA Handwritten Notes", href: "https://drive.google.com/file/d/10HliiBb9bIG45sz4xm-ysuSnXDHJiHWc/view", cta: "Open in Drive" },
+  { badge: "OS", title: "Operating Systems", href: "https://drive.google.com/file/d/1qkoW-E2B8Rugn5YF8BXX55tnmQfUe_Jx/view", cta: "Open in Drive" },
+  { badge: "DB", title: "Database Management Systems", href: "https://drive.google.com/file/d/1y3KKghRhQjKfbWhvLipMOCCemKd_XdTm/view", cta: "Open in Drive" },
+  { badge: "Java", title: "Java Core Concepts", href: "https://drive.google.com/file/d/1w4RugY4SyQj48V0uEqVV1DeQoD51Pz0K/view", cta: "Open in Drive" },
+  { badge: "75", title: "75 LeetCode DSA Q/A", href: "https://drive.google.com/file/d/10PMI6EhmUpQWStGvBkNOq2waOh45x_2j/view", cta: "Open in Drive" },
 ];
 
 function cardMarkup(note) {
@@ -33,7 +34,7 @@ function cardMarkup(note) {
     >
       <span class="notes-view__badge">${note.badge}</span>
       <span class="notes-view__title">${note.title}</span>
-      <span class="notes-view__footer">Open Google Drive notes</span>
+      <span class="notes-view__card-cta">${note.cta || "Open notes"}</span>
     </a>`;
 }
 

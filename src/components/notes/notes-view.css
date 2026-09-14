@@ -1,14 +1,21 @@
 /* src/components/notes/notes-view.css — fully fluid version */
 
 .notes-view {
-  height: 100%;
-  overflow-y: auto;
-  /* cancel the ~24px wrapper padding on all sides */
-  margin: -24px;
-  /* now your own fluid padding controls the real spacing */
+  /* Local aliases only — tokens.css is untouched. Same approach as footer.css:
+     map this component's color names onto the real app tokens so it always
+     matches the rest of the app instead of carrying its own theme. Scoped to
+     .notes-view so nothing else on the page is affected. */
+  --color-notes-bg: var(--color-bg);
+  --color-notes-card: var(--color-card);
+  --color-notes-border: var(--color-border);
+  --color-notes-label: var(--color-hub-accent-1);      /* amber, same accent footer uses */
+  --color-notes-badge: var(--color-hub-accent-1);
+  --color-notes-badge-text: var(--color-bg);           /* dark text on the amber badge */
+  --color-notes-glow: rgba(245, 158, 11, 0.35);
+
   padding: clamp(24px, 3.5vw, 56px) clamp(20px, 4vw, 72px) clamp(40px, 5vw, 72px);
   background: var(--color-notes-bg);
-  min-height: 100vh;
+
 }
 
 
@@ -93,10 +100,9 @@
 
 .notes-view__card:hover,
 .notes-view__card:focus-visible {
-  background: var(--color-notes-card-hover);
   border-color: var(--color-notes-badge);
   box-shadow: 0 0 0 1px var(--color-notes-badge), 0 0 28px var(--color-notes-glow);
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
 .notes-view__card:hover::before,
