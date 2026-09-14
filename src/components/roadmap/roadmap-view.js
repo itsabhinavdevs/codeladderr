@@ -10,6 +10,16 @@ import { getDifficultyColor } from "../../utils/difficulty-colors.js";
 import { formatDateId, todayId } from "../../utils/date.js";
 import * as sheetMetadata from "../../data/sheet-metadata.js";
 
+function injectStyles() {
+  const href = new URL('./roadmap-view.css', import.meta.url).href;
+  if (document.querySelector('link[data-style="roadmap-view"]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.dataset.style = 'roadmap-view';
+  document.head.appendChild(link);
+}
+
 // Roadmap = a pannable/zoomable tree of DSA topics (left) + a stats/streak
 // sidebar (right). The stats and streak-calendar widgets here overlap with
 // what Phase 5's Dashboard will eventually show — they're built here because
@@ -35,23 +45,23 @@ const NODE_H = 40;
 // sheet (the one comprehensive sheet spanning all patterns) except the final
 // "Mixed Revision" node, which goes straight to the Revision section.
 const NODES = [
-  { id: "arrays-hashing", label: "Arrays & Hashing", x: 650, y: 50, sheetId: "a2z" },
-  { id: "two-pointers", label: "Two Pointers", x: 500, y: 150, sheetId: "a2z" },
-  { id: "stack", label: "Stack", x: 820, y: 150, sheetId: "a2z" },
-  { id: "binary-search", label: "Binary Search", x: 430, y: 250, sheetId: "a2z" },
-  { id: "sliding-window", label: "Sliding Window", x: 610, y: 250, sheetId: "a2z" },
-  { id: "linked-list", label: "Linked List", x: 820, y: 250, sheetId: "a2z" },
-  { id: "trees", label: "Trees", x: 650, y: 350, sheetId: "a2z" },
-  { id: "fast-slow", label: "Fast & Slow", x: 560, y: 450, sheetId: "a2z" },
-  { id: "backtracking", label: "Backtracking", x: 820, y: 450, sheetId: "a2z" },
-  { id: "heap-pq", label: "Heap / Priority Queue", x: 560, y: 550, sheetId: "a2z" },
-  { id: "graphs", label: "Graphs", x: 780, y: 550, sheetId: "a2z" },
-  { id: "dp-1d", label: "1-D DP", x: 970, y: 550, sheetId: "a2z" },
-  { id: "intervals", label: "Intervals", x: 380, y: 650, sheetId: "a2z" },
-  { id: "kadane-greedy", label: "Kadane / Greedy", x: 560, y: 650, sheetId: "a2z" },
-  { id: "advanced-graphs", label: "Advanced Graphs", x: 760, y: 650, sheetId: "a2z" },
-  { id: "dp-2d", label: "2-D DP", x: 930, y: 650, sheetId: "a2z" },
-  { id: "prefix-sum", label: "Prefix Sum", x: 1100, y: 650, sheetId: "a2z" },
+  { id: "arrays-hashing", label: "Arrays & Hashing", x: 650, y: 50, sheetId: "dsa-patterns" },
+  { id: "two-pointers", label: "Two Pointers", x: 500, y: 150, sheetId: "dsa-patterns" },
+  { id: "stack", label: "Stack", x: 820, y: 150, sheetId: "dsa-patterns" },
+  { id: "binary-search", label: "Binary Search", x: 430, y: 250, sheetId: "dsa-patterns" },
+  { id: "sliding-window", label: "Sliding Window", x: 610, y: 250, sheetId: "dsa-patterns" },
+  { id: "linked-list", label: "Linked List", x: 820, y: 250, sheetId: "dsa-patterns" },
+  { id: "trees", label: "Trees", x: 650, y: 350, sheetId: "dsa-patterns" },
+  { id: "fast-slow", label: "Fast & Slow", x: 560, y: 450, sheetId: "dsa-patterns" },
+  { id: "backtracking", label: "Backtracking", x: 820, y: 450, sheetId: "dsa-patterns" },
+  { id: "heap-pq", label: "Heap / Priority Queue", x: 560, y: 550, sheetId: "dsa-patterns" },
+  { id: "graphs", label: "Graphs", x: 780, y: 550, sheetId: "dsa-patterns" },
+  { id: "dp-1d", label: "1-D DP", x: 970, y: 550, sheetId: "dsa-patterns" },
+  { id: "intervals", label: "Intervals", x: 380, y: 650, sheetId: "dsa-patterns" },
+  { id: "kadane-greedy", label: "Kadane / Greedy", x: 560, y: 650, sheetId: "dsa-patterns" },
+  { id: "advanced-graphs", label: "Advanced Graphs", x: 760, y: 650, sheetId: "dsa-patterns" },
+  { id: "dp-2d", label: "2-D DP", x: 930, y: 650, sheetId: "dsa-patterns" },
+  { id: "prefix-sum", label: "Prefix Sum", x: 1100, y: 650, sheetId: "dsa-patterns" },
   { id: "mixed-revision", label: "Mixed Revision", subtitle: "revise", x: 930, y: 750, sheetId: null },
 ];
 
@@ -130,7 +140,7 @@ function edgePath(from, to) {
 
 function handleNodeClick(node) {
   if (node.sheetId) {
-    navigateTo("practice", { sheetId: node.sheetId });
+    navigateTo("practice", { sheetId: node.sheetId, patternId: node.id });
   } else {
     navigateTo("revision");
   }
@@ -199,6 +209,16 @@ function attachCanvasInteractions() {
   };
   viewport.addEventListener("pointerup", stopDrag);
   viewport.addEventListener("pointerleave", stopDrag);
+
+  viewport.addEventListener(
+    "wheel",
+    (e) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      setZoom(zoom + delta);
+    },
+    { passive: false }
+  );
 
   canvasEl.querySelector('[data-zoom="in"]').addEventListener("click", () => setZoom(zoom + 0.15));
   canvasEl.querySelector('[data-zoom="out"]').addEventListener("click", () => setZoom(zoom - 0.15));
@@ -489,6 +509,8 @@ async function loadCalendarData() {
 // ---------------------------------------------------------------------------
 
 export async function mount(container) {
+  injectStyles();
+
   root = container;
   zoom = 0.85;
   panX = 0;
