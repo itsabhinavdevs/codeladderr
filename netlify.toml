@@ -16,6 +16,7 @@
   from = "/index.html"
   to = "/public/index.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/login.html"
