@@ -1,0 +1,18 @@
+{
+  "name": "dsatracker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DSA Tracker — static Firebase Auth + Firestore practice tracker",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "migrate": "node scripts/migrate-sheets-to-firestore.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "firebase-admin": "^12.0.0"
+  },
+  "dependencies": {
+    "firebase": "^10.0.0"
+  }
+}
