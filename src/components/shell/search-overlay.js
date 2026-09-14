@@ -1,9 +1,19 @@
 import { navigateTo } from "../../router/router.js";
-import { SECTIONS } from "../../data/sheet-metadata.js";
+import { SECTIONS, SHEETS } from "../../data/sheet-metadata.js";
+import { getSheetProblems } from "../../firebase/firestore.js";
+// NOTE: assumes Phase 3's sheet-metadata.js exports the 7-sheet array as
+// `SHEETS` alongside `SECTIONS`. Rename this import if Phase 3 used a
+// different name.
 
 let container = null;
 let isOpen = false;
 let inputEl = null;
+
+// Populated lazily the first time the overlay is opened, then reused for
+// every keystroke after that — avoids re-fetching all 7 sheets on every
+// character typed. Array<{id, sheetId, patternId, title, difficulty}>.
+let problemCache = null;
+let isLoadingProblems = false;
 
 function filterSections(query) {
   const q = query.trim().toLowerCase();
@@ -11,25 +21,87 @@ function filterSections(query) {
   return SECTIONS.filter((s) => s.label.toLowerCase().includes(q));
 }
 
+function filterProblems(query) {
+  const q = query.trim().toLowerCase();
+  if (!q || !problemCache) return [];
+  return problemCache.filter((p) => p.title.toLowerCase().includes(q)).slice(0, 8);
+}
+
+// Fetches and caches every sheet's problems once, per Phase 6's task list.
+async function ensureProblemCache() {
+  if (problemCache || isLoadingProblems) return;
+  isLoadingProblems = true;
+
+  try {
+    const perSheet = await Promise.all(
+      SHEETS.map(async (sheet) => {
+        const problems = await getSheetProblems(sheet.id);
+        return problems.map((p) => ({ ...p, sheetId: sheet.id }));
+      })
+    );
+    problemCache = perSheet.flat();
+  } catch (err) {
+    console.error("[search-overlay] failed to load problem cache", err);
+    problemCache = [];
+  } finally {
+    isLoadingProblems = false;
+    if (inputEl && isOpen) renderResults(inputEl.value);
+  }
+}
+
 function renderResults(query) {
   const resultsEl = container.querySelector("#search-overlay-results");
   if (!resultsEl) return;
-  const results = filterSections(query);
 
-  // TODO(Phase 6): once src/data/sheet-metadata.js carries real sheet entries and
-  // problems are migrated into Firestore (sheets/{sheetId}/patterns/{patternId}/problems),
-  // extend filterSections() to also search problem titles and render them here as a
-  // second, separate result group that deep-links via navigateTo("practice", { sheetId, questionId }).
+  const sectionResults = filterSections(query);
+  const problemResults = filterProblems(query);
+  const q = query.trim();
 
-  resultsEl.innerHTML = results
-    .map(
-      (s) => `<button class="search-overlay__result" data-section="${s.id}">${s.label}</button>`
-    )
-    .join("");
+  if (!sectionResults.length && !problemResults.length) {
+    resultsEl.innerHTML = `<div class="search-overlay__empty">${
+      q
+        ? isLoadingProblems
+          ? "Loading problems…"
+          : "No matches."
+        : "Type to search sections or problems."
+    }</div>`;
+    return;
+  }
 
-  resultsEl.querySelectorAll(".search-overlay__result").forEach((btn) => {
+  const sectionsHtml = sectionResults.length
+    ? `<div class="search-overlay__group-heading">Sections</div>` +
+      sectionResults
+        .map((s) => `<button class="search-overlay__result" data-section="${s.id}">${s.label}</button>`)
+        .join("")
+    : "";
+
+  const problemsHtml = problemResults.length
+    ? `<div class="search-overlay__group-heading">Problems</div>` +
+      problemResults
+        .map(
+          (p) =>
+            `<button class="search-overlay__result" data-sheet-id="${p.sheetId}" data-question-id="${p.id}"></button>`
+        )
+        .join("")
+    : "";
+
+  resultsEl.innerHTML = sectionsHtml + problemsHtml;
+
+  // Set text via textContent to avoid interpreting problem titles as markup.
+  resultsEl.querySelectorAll("[data-question-id]").forEach((btn, i) => {
+    btn.textContent = problemResults[i].title;
+  });
+
+  resultsEl.querySelectorAll("[data-section]").forEach((btn) => {
     btn.addEventListener("click", () => {
       navigateTo(btn.dataset.section);
+      close();
+    });
+  });
+
+  resultsEl.querySelectorAll("[data-question-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      navigateTo("practice", { sheetId: btn.dataset.sheetId, questionId: btn.dataset.questionId });
       close();
     });
   });
@@ -45,7 +117,7 @@ function render() {
           class="search-overlay__input"
           id="search-overlay-input"
           type="text"
-          placeholder="Search sections…"
+          placeholder="Search sections or problems…"
           autocomplete="off"
         />
         <div class="search-overlay__results" id="search-overlay-results"></div>
@@ -71,6 +143,7 @@ export function open() {
   isOpen = true;
   render();
   document.addEventListener("keydown", onKeydown);
+  ensureProblemCache();
 }
 
 export function close() {

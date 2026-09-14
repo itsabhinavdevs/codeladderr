@@ -1,19 +1,14 @@
 .search-overlay {
+  display: none;
   position: fixed;
   inset: 0;
-  z-index: 60;
-  display: flex;
-  align-items: flex-start;
+  z-index: 100;
   justify-content: center;
-  padding-top: 12vh;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-fast);
+  padding-top: 10vh;
 }
 
 .search-overlay--open {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
 }
 
 .search-overlay__backdrop {
@@ -24,44 +19,58 @@
 
 .search-overlay__panel {
   position: relative;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 var(--space-md);
-  background: var(--color-card);
+  width: min(560px, 90vw);
+  max-height: 70vh;
+  background: var(--color-card-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-panel);
+  border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .search-overlay__input {
-  width: 100%;
-  padding: var(--space-md);
+  padding: 16px;
+  font-size: 1rem;
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--color-border);
-  font-size: var(--font-size-md);
-}
-
-.search-overlay__input::placeholder {
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
+  outline: none;
 }
 
 .search-overlay__results {
-  max-height: 320px;
   overflow-y: auto;
-  padding: var(--space-xs);
+  padding: 8px 0;
+}
+
+.search-overlay__group-heading {
+  padding: 8px 16px 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
 }
 
 .search-overlay__result {
+  display: block;
   width: 100%;
   text-align: left;
-  padding: 10px var(--space-md);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm);
-  transition: background var(--transition-fast);
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
 }
 
 .search-overlay__result:hover {
-  background: var(--color-bg);
+  background: var(--color-app-bg);
+}
+
+.search-overlay__empty,
+.search-overlay__loading {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
 }
