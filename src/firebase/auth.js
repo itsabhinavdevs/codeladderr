@@ -93,7 +93,16 @@ export async function signOutUser() {
 export function onAuthChange(callback) {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      await bootstrapUserDoc(user);
+      try {
+        await bootstrapUserDoc(user);
+      } catch (err) {
+        // Do NOT let a Firestore failure (e.g. permission-denied because
+        // firestore.rules hasn't been deployed yet) prevent the caller from
+        // learning the real auth state — that's what causes index.html and
+        // login.html to get stuck/loop, since neither page ever receives a
+        // stable signal to act on.
+        console.error("[auth] bootstrapUserDoc failed — check Firestore rules are deployed:", err);
+      }
     }
     callback(toPublicUser(user));
   });
