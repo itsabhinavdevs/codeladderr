@@ -8,6 +8,7 @@ import { SHEETS } from "../../data/sheet-metadata.js";
 import { getState, subscribe } from "../../state/store.js";
 import * as sheetView from "./sheet-view.js";
 import { ensureStyle } from "./_ensure-style.js";
+import { LADDER_LOGO_SVG } from "../shell/ladder-logo.js";
 
 let rootEl = null;
 let clickHandler = null;
@@ -68,9 +69,9 @@ function renderHub(container) {
   container.innerHTML = `
     <section class="practice-hub">
       <header class="practice-hub__hero">
-        <div class="practice-hub__glow" aria-hidden="true">
-          <span class="practice-hub__rocket">🚀</span>
-        </div>
+      <div class="practice-hub__glow" aria-hidden="true">
+        ${LADDER_LOGO_SVG}
+      </div>
         <span class="practice-hub__badge">
           <span class="practice-hub__badge-dot" aria-hidden="true"></span>
           Premium DSA Ecosystem
