@@ -10,6 +10,7 @@ import * as conceptsView from "../components/concepts/concepts-view.js";
 import * as learningView from "../components/learning/learning-view.js";
 import * as revisionView from "../components/revision/revision-view.js";
 import * as dashboard from "../components/dashboard/dashboard.js";
+import * as accountDetails from "../components/settings/account-details.js";
 
 const VALID_SECTIONS = new Set([
   "dashboard",
@@ -19,6 +20,7 @@ const VALID_SECTIONS = new Set([
   "concepts",
   "learning",
   "revision",
+  "settings",
 ]);
 
 // section name -> { mount(container, params), unmount?() }
@@ -51,6 +53,10 @@ const sectionRegistry = new Map([
     "revision",
     revisionView
   ],
+  [
+    "settings",
+    accountDetails
+  ],
 ]);
 
 const routeListeners = new Set();
@@ -81,6 +87,7 @@ export function getCurrentRoute() {
   const params = {};
   if (search.has("sheetId")) params.sheetId = search.get("sheetId");
   if (search.has("questionId")) params.questionId = search.get("questionId");
+  if (search.has("patternId")) params.patternId = search.get("patternId");
   return { section, params };
 }
 
