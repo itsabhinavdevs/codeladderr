@@ -1,6 +1,3 @@
-# Firebase config (real values injected at build/deploy time — see .env.example)
-src/firebase/firebase-config.js
-
 # Environment variables
 .env
 .env.local
