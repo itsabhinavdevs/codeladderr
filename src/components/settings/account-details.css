@@ -1,0 +1,137 @@
+.account-details {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.account-details__title {
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+}
+
+.account-details__card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.account-details__loading {
+  color: var(--color-text-secondary);
+}
+
+.account-details__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.account-details__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-details__field {
+  display: flex;
+  gap: 8px;
+}
+
+.account-details__field-label {
+  color: var(--color-text-secondary);
+  width: 70px;
+}
+
+.account-details__field-value {
+  color: var(--color-text-primary);
+}
+
+.account-details__danger-zone {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid var(--color-hard);
+  border-radius: 10px;
+}
+
+.account-details__danger-title {
+  color: var(--color-hard);
+  margin-bottom: 8px;
+}
+
+.account-details__danger-copy {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+
+.account-details__delete-btn {
+  background: var(--color-hard);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.account-details__confirm-dialog[hidden] {
+  display: none;
+}
+
+.account-details__confirm-dialog {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.account-details__confirm-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.account-details__confirm-panel {
+  position: relative;
+  width: min(420px, 90vw);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 24px;
+  color: var(--color-text-primary);
+}
+
+.account-details__confirm-panel input {
+  width: 100%;
+  margin: 16px 0;
+  padding: 10px;
+  background: var(--color-app-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-primary);
+}
+
+.account-details__confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.account-details__confirm-btn {
+  background: var(--color-hard);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.account-details__confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
