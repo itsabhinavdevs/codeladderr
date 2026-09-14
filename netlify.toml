@@ -1,0 +1,33 @@
+# No build step required. This site is published straight from the repo root so that
+# root-absolute imports like "/src/main.js" resolve as written in the HTML/JS.
+# public/ holds the two real HTML entry points plus static assets; the redirects
+# below map the clean URLs the app already uses ("/", "/login.html", "/assets/*")
+# onto their real location inside public/.
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/public/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/public/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/login.html"
+  to = "/public/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/assets/*"
+  to = "/public/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/public/robots.txt"
+  status = 200
