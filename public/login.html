@@ -91,10 +91,7 @@
       // to /public/index.html, so a plain "/" also works there — but using
       // the explicit /public/ path here keeps local dev and prod consistent.
       function resolveAppUrl(page) {
-        const isLocalDev =
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1";
-        return isLocalDev ? `/public/${page}` : `/${page}`;
+        return `/public/${page}`;
       }
 
       const card = document.getElementById("login-card");

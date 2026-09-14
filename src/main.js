@@ -24,10 +24,7 @@ let unsubscribeUserDoc = null;
 // Deciding by hostname only (never by the current pathname) avoids any
 // ambiguity from where the redirect is triggered.
 function getRedirectPath(page) {
-  const isLocalDev =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
-  return isLocalDev ? `/public/${page}` : `/${page}`;
+  return `/public/${page}`;
 }
 
 // ==========================================
