@@ -1,6 +1,7 @@
 import { getState, subscribe } from "../../state/store.js";
 import { navigateTo } from "../../router/router.js";
 import { signOutUser } from "../../firebase/auth.js";
+import { LADDER_LOGO_SVG } from "./ladder-logo.js";
 
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard" },
@@ -23,6 +24,15 @@ function render() {
   container.innerHTML = `
     <div class="sidebar__backdrop${isOpen ? " sidebar__backdrop--visible" : ""}" id="sidebar-backdrop"></div>
     <nav class="sidebar__panel${isOpen ? " sidebar__panel--open" : ""}" id="sidebar-panel" aria-hidden="${!isOpen}">
+      <div class="sidebar__header">
+        <button class="sidebar__logo-btn" id="sidebar-logo-btn" aria-label="Go to dashboard">
+          ${LADDER_LOGO_SVG}
+          <span class="sidebar__brand-name">CODE <b>Ladderr</b></span>
+        </button>
+        <button class="sidebar__close-btn" id="sidebar-close-btn" aria-label="Close menu">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <ul class="sidebar__nav">
         ${NAV_ITEMS.map(
           (item) => `
@@ -47,6 +57,13 @@ function render() {
       </div>
     </nav>
   `;
+
+  container.querySelector("#sidebar-logo-btn").addEventListener("click", () => {
+    navigateTo("dashboard");
+    close();
+  });
+
+  container.querySelector("#sidebar-close-btn").addEventListener("click", close);
 
   container.querySelectorAll(".sidebar__nav-link").forEach((btn) => {
     btn.addEventListener("click", () => {

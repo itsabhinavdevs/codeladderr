@@ -26,11 +26,78 @@
   z-index: 41;
   display: flex;
   flex-direction: column;
-  padding: var(--topbar-primary-height) 0 0;
 }
 
 .sidebar__panel--open {
   transform: translateX(0);
+}
+
+/* ---------- Header: rocket logo (left) + close button (right) ---------- */
+
+.sidebar__header {
+  height: var(--topbar-primary-height);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0 var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar__logo-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.sidebar__logo-btn:hover {
+  opacity: 0.85;
+}
+
+.sidebar__logo-btn img,
+.sidebar__logo-btn svg.ladder-logo {
+  height: 40px;
+  width: 40px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sidebar__brand-name {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__brand-name b {
+  font-weight: 800;
+  color: var(--color-brand-accent);
+}
+
+.sidebar__close-btn {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.sidebar__close-btn:hover {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
 }
 
 .sidebar__nav {
