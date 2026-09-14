@@ -7,6 +7,8 @@ import {
   collection,
   getDocs,
   onSnapshot,
+  query,
+  orderBy,
   writeBatch,
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import { db } from "./init.js";
@@ -165,4 +167,20 @@ export async function getSheetProblems(sheetId) {
     console.error(`[DB Error] Failed to load problems for sheet ${sheetId}:`, err);
     throw err;
   }
+}
+
+/**
+ * Phase 6: generic realtime listener for root-level (non users/{uid}-scoped)
+ * collections, e.g. "notifications". Added alongside the existing
+ * subscribeToSubDocs/subscribeToUserDoc — same error-logging convention.
+ */
+export function subscribeToCollection(path, callback, { orderByField, direction = "desc" } = {}) {
+  if (!path) return () => {};
+  const ref = collection(db, path);
+  const q = orderByField ? query(ref, orderBy(orderByField, direction)) : ref;
+  return onSnapshot(
+    q,
+    (snap) => callback(snap.docs.map((d) => ({ id: d.id, ...d.data() }))),
+    (err) => console.error(`[DB Error] Snapshot failed on collection ${path}:`, err)
+  );
 }
