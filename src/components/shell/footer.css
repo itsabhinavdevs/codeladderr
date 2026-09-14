@@ -1,25 +1,298 @@
+@keyframes footer-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .app-footer {
+  /* Local aliases only — tokens.css is untouched. These map the footer's
+     color names onto the project's real design tokens, since tokens.css
+     doesn't define --color-accent, --color-card-deep, --color-neutral-800/400,
+     --color-terminal, --color-code-blue, or --font-mono directly. Scoped to
+     .app-footer so nothing else on the page is affected. */
+  --color-accent: var(--color-hub-accent-1);              /* amber, matches "EVERY DAY" */
+  --color-accent-dim: rgba(245, 185, 66, 0.35);
+  --color-card-deep: var(--color-card);
+  --color-neutral-800: var(--color-border);
+  --color-neutral-400: var(--color-text-secondary);
+  --color-terminal: var(--color-hub-accent-3);             /* teal — green is reserved for the contribution graph */
+  --color-code-blue: var(--color-hub-accent-2);            /* indigo */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  padding: var(--space-lg) var(--space-md);
+  gap: 40px;
+  padding: 48px 32px;
   border-top: 1px solid var(--color-border);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-  flex-wrap: wrap;
+}
+
+/* ---- 1. heading ---- */
+
+.app-footer__heading {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
   text-align: center;
 }
 
+.app-footer__heading span {
+  color: var(--color-accent);
+}
+
+/* ---- 2. grid ---- */
+
+.app-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 1152px;
+}
+
+@media (min-width: 640px) {
+  .app-footer__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .app-footer__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---- 3. card base ---- */
+
+.app-footer__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 150px;
+  padding: 20px;
+  background-color: var(--color-card-deep);
+  border: 1px solid var(--color-neutral-800);
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.app-footer__card:hover {
+  border-color: var(--color-accent);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.5),
+    0 0 15px var(--color-accent-dim),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(-5px);
+}
+
+.app-footer__card:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+.app-footer__card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.app-footer__muted {
+  font-size: 0.75rem;
+  color: var(--color-neutral-400);
+}
+
+.app-footer__muted--upper {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ---- card 1: hello world ---- */
+
+.app-footer__card--hello {
+  position: relative;
+}
+
+.app-footer__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-terminal);
+}
+
+.app-footer__terminal {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  color: var(--color-terminal);
+}
+
+.app-footer__cursor {
+  animation: footer-blink 1s step-end infinite;
+}
+
+.app-footer__muted--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---- card 2: github ---- */
+
+.app-footer__octicon { color: var(--color-text-primary); }
+
+.app-footer__code-icon {
+  font-family: var(--font-mono);
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-code-blue);
+}
+
+.app-footer__loading {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--color-neutral-400);
+}
+
+/* ---- card 3: 1% better ---- */
+
+.app-footer__now {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-hard);
+}
+
+.app-footer__better {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+.app-footer__better span {
+  color: var(--color-accent);
+}
+
+/* ---- card 4: routine pills ---- */
+
+.app-footer__card--routine { gap: 14px; }
+
+.app-footer__pill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.app-footer__pill {
+  padding: 8px 16px;
+  background-color: var(--color-neutral-800);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.app-footer__pill-accent { filter: hue-rotate(190deg); }
+
+/* ---- card 5: python snippet ---- */
+
+.app-footer__card--code {
+  align-items: stretch;
+  justify-content: center;
+}
+
+.app-footer__snippet {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--color-text-primary);
+  overflow-x: auto;
+}
+
+.tok-kw   { color: var(--color-hard); }        /* def, if, return */
+.tok-fn   { color: var(--color-code-blue); }   /* success */
+.tok-bool { color: var(--color-medium); }      /* True */
+.tok-cm   { color: var(--color-neutral-400); } /* comments */
+
+.app-footer__faux-scrollbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  background-color: var(--color-bg);
+  border-radius: 6px;
+  font-size: 0.55rem;
+  color: var(--color-neutral-400);
+}
+
+.app-footer__faux-thumb {
+  flex: 1;
+  height: 6px;
+  background-color: var(--color-neutral-800);
+  border-radius: 999px;
+}
+
+/* ---- card 6: semicolon ---- */
+
+.app-footer__seek-text {
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+}
+
+.app-footer__semicolon {
+  font-size: 3.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-hard);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+
+/* ---- card 7: while loop ---- */
+
+.app-footer__while-code {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-code-blue);
+  text-align: center;
+}
+
+.app-footer__engineers {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--color-text-primary);
+}
+
+/* ---- sign-off ---- */
+
+.app-footer__signoff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-footer__spark {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+}
+
 .app-footer__brand {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--color-text-primary);
 }
 
-.app-footer__link {
-  transition: color var(--transition-fast);
-}
-
-.app-footer__link:hover {
-  color: var(--color-text-primary);
+.app-footer__copyright {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-neutral-400);
 }
