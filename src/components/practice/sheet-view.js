@@ -6,7 +6,7 @@ import { navigateTo } from "../../router/router.js";
 import { getSubDoc, getSheetProblems, getAllSubDocs } from "../../firebase/firestore.js";
 import { getState } from "../../state/store.js";
 import { getDifficultyColor } from "../../utils/difficulty-colors.js";
-import { getSheetMeta } from "../../data/sheet-metadata.js";
+import { getSheetMeta, getPatternOrder } from "../../data/sheet-metadata.js";
 import * as patternSidebar from "./pattern-sidebar.js";
 import * as problemRow from "./problem-row.js";
 import * as notesModal from "./notes-editor-modal.js";
@@ -47,11 +47,24 @@ function groupByPattern(problems) {
 
 function patternSummaries() {
   const grouped = groupByPattern(allProblems);
-  return [...grouped.entries()].map(([patternId, problems]) => ({
+  const summaries = [...grouped.entries()].map(([patternId, problems]) => ({
     patternId,
     total: problems.length,
     solved: problems.filter((p) => ticked[p.id]).length,
   }));
+
+  const order = getPatternOrder(currentSheetId);
+  if (order) {
+    const rank = new Map(order.map((id, i) => [id, i]));
+    summaries.sort((a, b) => {
+      const ra = rank.has(a.patternId) ? rank.get(a.patternId) : Infinity;
+      const rb = rank.has(b.patternId) ? rank.get(b.patternId) : Infinity;
+      if (ra !== rb) return ra - rb;
+      return a.patternId.localeCompare(b.patternId); // unlisted ids: alphabetical fallback
+    });
+  }
+
+  return summaries;
 }
 
 function overallSummary() {
@@ -305,6 +318,13 @@ export async function mount(container, params = {}) {
     }
   };
   container.addEventListener("change", changeHandler);
+
+  if (params.patternId) {
+    activePatternId = params.patternId;
+    patternSidebar.setActive(activePatternId);
+    container.querySelector(".sheet-view__pattern-select").value = activePatternId;
+    renderRows(container);
+  }
 
   if (params.questionId) {
     requestAnimationFrame(() => {
