@@ -3,10 +3,32 @@ import { signOutUser } from "../../firebase/auth.js";
 import { getState } from "../../state/store.js";
 import * as appearanceToggle from "./appearance-toggle.js";
 
+// Paste just the file ID from your Drive share link, e.g. for
+//   https://drive.google.com/file/d/1AbCdEfGhIjKlMnOp/view?usp=sharing
+// the ID is the part between /d/ and /view:
+//   1AbCdEfGhIjKlMnOp
+// The file's Drive sharing must be set to "Anyone with the link" or it will
+// fail to load regardless of which URL format is used below.
+const BILLING_IMAGE_FILE_ID = "1_HJ4nCjoGjTZxvrq62doRbVbBalX1SlX";
+
+// Drive's `thumbnail` endpoint is the reliable way to embed a Drive image in
+// a plain <img> tag — `uc?export=view` frequently breaks (redirects or a
+// virus-scan interstitial that <img> can't follow, showing a broken-icon).
+// `sz=w1000` asks for a version up to 1000px wide; adjust if you want it
+// sharper/smaller.
+const BILLING_IMAGE_URL = `https://drive.google.com/thumbnail?id=${BILLING_IMAGE_FILE_ID}&sz=w1000`;
+// Used only if the thumbnail URL fails to load (see the onerror handler
+// below) — kept as a second attempt since Drive's behavior here isn't 100%
+// consistent across every file/account.
+const BILLING_IMAGE_FALLBACK_URL = `https://drive.google.com/uc?export=view&id=${BILLING_IMAGE_FILE_ID}`;
+
 let container = null;
 let panelEl = null;
 let isOpen = false;
 let anchorEl = null;
+
+let billingPopupEl = null;
+let isBillingPopupOpen = false;
 
 function positionPanel() {
   if (!panelEl || !anchorEl) return;
@@ -26,8 +48,8 @@ function initials(name) {
 }
 
 // Icon + chevron menu row, matching the original profile dropdown's layout.
-// Profile / Billing / What's New are stubs for now (no destination yet) —
-// same pattern the Shared Contract used for Settings before Phase 6 wires it.
+// Profile / What's New are stubs for now (no destination yet) — same
+// pattern the Shared Contract used for Settings before Phase 6 wired it.
 function menuItemMarkup({ id, label, iconPath, chevron = true }) {
   return `
     <li>
@@ -120,14 +142,22 @@ function render() {
   panelEl = container.querySelector("#profile-dropdown-panel");
   positionPanel();
 
-  // Profile / Billing / What's New have no destination yet — stubs, same
-  // pattern as Settings before Phase 6 builds settings/account-details.js.
-  ["profile-dropdown-profile", "profile-dropdown-settings", "profile-dropdown-billing", "profile-dropdown-whats-new"].forEach(
-    (id) => {
-      const btn = container.querySelector(`#${id}`);
-      if (btn) btn.addEventListener("click", () => close());
-    }
-  );
+  // Profile / What's New remain unbuilt stubs — clicking them just closes
+  // the menu. Billing now opens the image popup instead (see below).
+  ["profile-dropdown-profile", "profile-dropdown-whats-new"].forEach((id) => {
+    const btn = container.querySelector(`#${id}`);
+    if (btn) btn.addEventListener("click", () => close());
+  });
+
+  container.querySelector("#profile-dropdown-settings").addEventListener("click", () => {
+    close();
+    navigateTo("settings");
+  });
+
+  container.querySelector("#profile-dropdown-billing").addEventListener("click", () => {
+    close();
+    openBillingPopup();
+  });
 
   appearanceToggle.mount(container.querySelector("#profile-dropdown-appearance"));
 
@@ -172,6 +202,70 @@ export function toggle(anchor) {
   }
 }
 
+// ---------- Billing image popup ----------
+// A small centered card showing one image, appended straight to <body> (not
+// the topbar container) so it isn't clipped by any ancestor's overflow.
+// Closes on: clicking the dark backdrop, pressing Escape, or clicking
+// anywhere outside the popup card. Clicking the image itself does nothing.
+
+function renderBillingPopup() {
+  if (billingPopupEl) return;
+
+  billingPopupEl = document.createElement("div");
+  billingPopupEl.className = "billing-popup-backdrop";
+  billingPopupEl.innerHTML = `
+    <div class="billing-popup-card" role="dialog" aria-modal="true" aria-label="Billing">
+      <button type="button" class="billing-popup-close" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <img
+        src="${BILLING_IMAGE_URL}"
+        alt="Billing"
+        referrerpolicy="no-referrer"
+        onerror="this.dataset.failed ? (this.replaceWith(Object.assign(document.createElement('p'),{className:'billing-popup-error',textContent:'Image failed to load — check the Drive file is shared as \\'Anyone with the link\\'.'}))) : (this.dataset.failed='1', this.src='${BILLING_IMAGE_FALLBACK_URL}')"
+      />
+    </div>
+  `;
+
+  document.body.appendChild(billingPopupEl);
+
+  // Clicking the backdrop (anything outside the card) closes it.
+  billingPopupEl.addEventListener("click", (event) => {
+    if (event.target === billingPopupEl) closeBillingPopup();
+  });
+
+  billingPopupEl.querySelector(".billing-popup-close").addEventListener("click", closeBillingPopup);
+}
+
+function onBillingKeydown(event) {
+  if (event.key === "Escape") closeBillingPopup();
+}
+
+export function openBillingPopup() {
+  if (isBillingPopupOpen) return;
+  isBillingPopupOpen = true;
+  renderBillingPopup();
+  // Next frame, so the transition (opacity/scale) actually animates in
+  // rather than snapping straight to the open state.
+  requestAnimationFrame(() => {
+    if (billingPopupEl) billingPopupEl.classList.add("billing-popup-backdrop--open");
+  });
+  document.addEventListener("keydown", onBillingKeydown);
+}
+
+export function closeBillingPopup() {
+  if (!isBillingPopupOpen || !billingPopupEl) return;
+  isBillingPopupOpen = false;
+  billingPopupEl.classList.remove("billing-popup-backdrop--open");
+  document.removeEventListener("keydown", onBillingKeydown);
+  const elToRemove = billingPopupEl;
+  billingPopupEl = null;
+  setTimeout(() => elToRemove.remove(), 200);
+}
+
 export function mount(el) {
   container = el;
   render();
@@ -180,6 +274,7 @@ export function mount(el) {
 export function unmount() {
   document.removeEventListener("click", onDocumentClick, true);
   document.removeEventListener("keydown", onKeydown);
+  closeBillingPopup();
   container = null;
   panelEl = null;
   isOpen = false;

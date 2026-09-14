@@ -168,3 +168,77 @@
 .profile-dropdown__logout-btn:hover {
   background: rgba(239, 68, 68, 0.12);
 }
+
+/* ---------- Billing image popup ---------- */
+/* Appended to <body> by profile-dropdown.js, not scoped inside the topbar,
+   so it sits above everything and is never clipped. */
+
+.billing-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.billing-popup-backdrop--open {
+  opacity: 1;
+}
+
+.billing-popup-card {
+  position: relative;
+  max-width: min(90vw, 420px);
+  max-height: 85vh;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-panel);
+  padding: var(--space-sm);
+  transform: scale(0.94);
+  transition: transform var(--transition-fast);
+}
+
+.billing-popup-backdrop--open .billing-popup-card {
+  transform: scale(1);
+}
+
+.billing-popup-card img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(85vh - var(--space-lg));
+  border-radius: var(--radius-sm);
+  object-fit: contain;
+}
+
+.billing-popup-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-panel);
+  transition: background var(--transition-fast);
+}
+
+.billing-popup-close:hover {
+  background: var(--color-bg);
+}
+
+.billing-popup-error {
+  max-width: 260px;
+  padding: var(--space-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
