@@ -36,8 +36,11 @@
       .login-card__logo {
         width: 56px;
         height: 56px;
-        border-radius: var(--radius-sm);
-        object-fit: cover;
+      }
+
+      .login-card__logo svg {
+        width: 100%;
+        height: 100%;
       }
 
       .login-card__title {
@@ -85,6 +88,7 @@
 
     <script type="module">
       import { onAuthChange, signInWithGoogle, handleRedirectResult } from "/src/firebase/auth.js";
+      import { LADDER_LOGO_SVG } from "/src/components/shell/ladder-logo.js";
 
       // Plain `npx serve .` has no rewrite rules, so the real path to the app
       // shell is /public/index.html. On Netlify, netlify.toml redirects "/"
@@ -98,8 +102,8 @@
 
       function renderButton() {
         card.innerHTML = `
-          <img class="login-card__logo" src="/public/assets/logos/logo.jpg" alt="DSA Tracker logo" />
-          <h1 class="login-card__title">DSA Tracker</h1>
+          <div class="login-card__logo">${LADDER_LOGO_SVG}</div>
+          <h1 class="login-card__title">CODE Ladderr</h1>
           <p class="login-card__subtitle">Track your DSA practice, every day.</p>
           <button class="login-card__google-btn" id="google-signin-btn">Continue with Google</button>
         `;
