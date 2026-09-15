@@ -1,130 +1,451 @@
 <!DOCTYPE html>
 <html lang="en" class="theme-dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CODE Ladderr — Sign in</title>
-    <link rel="icon" type="image/svg+xml" href="/public/assets/icons/favicon.svg">
-    <link rel="stylesheet" href="/src/styles/tokens.css" />
-    <link rel="stylesheet" href="/src/styles/themes/dark.css" />
-    <link rel="stylesheet" href="/src/styles/themes/light.css" />
-    <link rel="stylesheet" href="/src/styles/base.css" />
-    <style>
-      .login-page {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--color-bg);
-        padding: var(--space-md);
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Ladder — Track your DSA practice</title>
+<link rel="icon" type="image/svg+xml" href="/public/assets/icons/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0b0d;
+    --bg-soft: #111114;
+    --border: #232326;
+    --text: #f5f5f5;
+    --text-dim: #9a9aa0;
+    --accent: #2ec4a6;
+    --accent-dim: rgba(46,196,166,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: 'Poppins','Segoe UI',Helvetica,Arial,sans-serif;
+    scroll-behavior:smooth;
+  }
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;}
+  .wrap{
+    max-width:1240px;
+    margin:0 auto;
+    padding:0 40px;
+  }
 
-      .login-card {
-        width: 100%;
-        max-width: 360px;
-        background: var(--color-card);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-md);
-        padding: var(--space-xl) var(--space-lg);
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--space-md);
-      }
+  /* NAV */
+  header{
+    padding:28px 0 0 0;
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:20px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .logo-badge{
+    width:26px;height:26px;
+    background:var(--accent);
+    border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;
+    color:#04231d;
+    font-weight:700;
+  }
+  .logo-accent{
+    color: var(--accent);
+  }
 
-      .login-card__logo {
-        width: 56px;
-        height: 56px;
-      }
+  .logo:hover .logo-accent{
+    filter: brightness(1.15);
+  }
+  .nav-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .theme-toggle{
+    width:36px;height:36px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-dim);
+    cursor:pointer;
+    flex-shrink:0;
+  }
 
-      .login-card__logo svg {
-        width: 100%;
-        height: 100%;
-      }
+  /* HERO */
+  .hero{
+    padding:70px 0 40px 0;
+    min-height:calc(100vh - 90px);
+    display:flex;
+    align-items:center;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items:center;
+    gap:20px;
+    width:100%;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 16px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    font-size:13px;
+    color:var(--text-dim);
+    margin-bottom:26px;
+  }
+  .badge .dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:52px;
+    line-height:1.12;
+    font-weight:700;
+    letter-spacing:-0.5px;
+  }
+  .hero h1 .accent-line{
+    color:var(--accent);
+    position:relative;
+    display:inline-block;
+  }
+  .hero h1 .accent-line .underline{
+    position:absolute;
+    left:2px;
+    bottom:-6px;
+    height:3px;
+    width:80%;
+    background:var(--accent);
+    border-radius:2px;
+  }
+  .hero p.lead{
+    margin-top:26px;
+    color:var(--text-dim);
+    font-size:15.5px;
+    line-height:1.7;
+    max-width:460px;
+  }
+  .hero p.lead .name{
+    color:var(--accent);
+    font-weight:600;
+  }
+  .hero p.lead b{
+    color:var(--text);
+    font-weight:600;
+  }
 
-      .login-card__title {
-        font-size: var(--font-size-lg);
-        font-weight: 600;
-      }
+  .stats{
+    display:flex;
+    gap:46px;
+    margin-top:38px;
+  }
+  .stat-num{
+    font-size:26px;
+    font-weight:700;
+    color:var(--text);
+  }
+  .stat-label{
+    font-size:13px;
+    color:var(--text-dim);
+    margin-top:4px;
+    border-bottom:1px solid var(--border);
+    display:inline-block;
+    padding-bottom:6px;
+  }
 
-      .login-card__subtitle {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-secondary);
-        margin-top: calc(var(--space-xs) * -2);
-      }
+  .cta-row{
+    display:flex;
+    gap:14px;
+    margin-top:38px;
+    align-items:center;
+  }
+  .btn{
+    padding:13px 26px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:none;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn[disabled]{opacity:.6; cursor:progress; transform:none;}
+  .btn-primary{
+    background:var(--accent);
+    color:#04231d;
+    border:1px solid var(--accent);
+  }
+  .btn-outline{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--border);
+    padding:9px 18px;
+  }
+  .btn-outline:hover{
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 
-      .login-card__google-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--space-sm);
-        width: 100%;
-        padding: 12px var(--space-md);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-sm);
-        background: var(--color-bg);
-        font-size: var(--font-size-sm);
-        font-weight: 500;
-        transition: border-color var(--transition-fast);
-      }
 
-      .login-card__google-btn:hover {
-        border-color: var(--color-text-secondary);
-      }
+  .signin-error{
+    margin-top:14px;
+    font-size:13px;
+    color:#ff6b6b;
+    display:none;
+  }
 
-      .login-card__loading {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-secondary);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="login-page">
-      <div class="login-card" id="login-card">
-        <p class="login-card__loading" id="login-loading">Loading…</p>
+  .social-row{
+    display:flex;
+    gap:12px;
+    margin-top:40px;
+  }
+  .social-icon{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-dim);
+    font-size:13px;
+  }
+  .social-icon:hover svg{
+    filter: brightness(1.15);
+  }
+
+  /* HERO VISUAL — mockup card replaces the portrait */
+  .hero-visual{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .mockup-card{
+    width:380px;
+    max-width:100%;
+    background:var(--bg-soft);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:24px;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.55));
+  }
+  .mockup-card__head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .mockup-card__streak{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .mockup-card__streak svg{ width:16px; height:16px; stroke:var(--accent); }
+  .mockup-card__body{
+    display:flex;
+    align-items:center;
+    gap:22px;
+  }
+  .ring-label{ font-size:15px; font-weight:600; fill:var(--text); }
+  .heatmap{
+    display:grid;
+    grid-template-columns:repeat(9, 1fr);
+    gap:4px;
+    flex:1;
+  }
+  .heatmap span{
+    width:100%;
+    aspect-ratio:1;
+    border-radius:3px;
+    background:var(--border);
+  }
+  .mockup-card__foot{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  .deco-bar{
+    position:absolute;
+    top:12%;
+    right:0%;
+    display:flex;
+    gap:6px;
+  }
+  .deco-bar span{
+    width:2px;
+    background:var(--border);
+    display:block;
+  }
+  .deco-bar span:nth-child(1){height:34px;}
+  .deco-bar span:nth-child(2){height:54px;}
+
+  @media (max-width: 900px){
+    .hero-grid{grid-template-columns:1fr; text-align:center;}
+    .hero h1{font-size:38px;}
+    .hero p.lead{margin-left:auto;margin-right:auto;}
+    .stats{justify-content:center;}
+    .cta-row{justify-content:center;}
+    .social-row{justify-content:center;}
+    .hero-visual{margin-top:30px;}
+    .deco-bar{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+      <div class="logo">
+        <span class="logo-badge">C</span>
+        Code <span class="logo-accent">Ladder</span>
+      </div>
+    <div class="nav-right">
+      <button class="btn btn-outline js-google-signin" id="nav-login-btn" type="button">Login</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="badge"><span class="dot"></span> Google sign-in · Firestore-synced</div>
+      <h1>
+        Track Every Pattern.<br>
+        <span class="accent-line">Master Every Problem<span class="underline"></span></span>
+      </h1>
+      <p class="lead">Code Ladder keeps every sheet, streak, and note from your <b>DSA practice</b> in one place — synced to your <span class="name">Google account</span>, free forever.</p>
+
+      <div class="stats">
+        <div>
+          <div class="stat-num">7</div>
+          <div class="stat-label">Practice Sheets</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Per-User Data</div>
+        </div>
+        <div>
+          <div class="stat-num">$0</div>
+          <div class="stat-label">Forever Free</div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary js-google-signin" id="hero-cta-btn" type="button">Get Started</button>
+      </div>
+      <p class="signin-error" id="signin-error">Sign-in didn't go through. Try again.</p>
+
+      <div class="social-row">
+          <a href="https://github.com/itsabhinavdevs/codeladderr" target="_blank" rel="noopener" class="social-icon" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.26 5.66.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/>
+            </svg>
+          </a>
+
       </div>
     </div>
 
-    <script type="module">
-      import { onAuthChange, signInWithGoogle, handleRedirectResult } from "/src/firebase/auth.js";
-      import { LADDER_LOGO_SVG } from "/src/components/shell/ladder-logo.js";
+    <div class="hero-visual" aria-hidden="true">
+      <div class="deco-bar"><span></span><span></span></div>
+      <div class="mockup-card">
+        <div class="mockup-card__head">
+          <span class="mockup-card__streak">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1.5-1-2.5-1.5-3 1.5 1 3.5 3.5 3.5 7a7 7 0 0 1-14 0c0-4 3-6 4.5-9 .3 1 .8 1.6 1.5 1.8"/></svg>
+            12 day streak
+          </span>
+          <span style="font-size:12px; color:var(--text-dim);">dsa-patterns</span>
+        </div>
+        <div class="mockup-card__body">
+          <svg width="86" height="86" viewBox="0 0 92 92">
+            <circle cx="46" cy="46" r="38" fill="none" stroke="var(--border)" stroke-width="10" />
+            <circle cx="46" cy="46" r="38" fill="none" stroke="var(--accent)" stroke-width="10"
+              stroke-dasharray="238.7" stroke-dashoffset="90" stroke-linecap="round"
+              transform="rotate(-90 46 46)" />
+            <text x="46" y="51" text-anchor="middle" class="ring-label">62%</text>
+          </svg>
+          <div class="heatmap" id="mockup-heatmap"></div>
+        </div>
+        <div class="mockup-card__foot">
+          <span>128 / 206 solved</span>
+          <span>updated today</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      // Plain `npx serve .` has no rewrite rules, so the real path to the app
-      // shell is /public/index.html. On Netlify, netlify.toml redirects "/"
-      // to /public/index.html, so a plain "/" also works there — but using
-      // the explicit /public/ path here keeps local dev and prod consistent.
-      function resolveAppUrl(page) {
-        return `/public/${page}`;
-      }
+<script type="module">
+  import { onAuthChange, signInWithGoogle, handleRedirectResult } from "/src/firebase/auth.js";
 
-      const card = document.getElementById("login-card");
+  // Plain `npx serve .` has no rewrite rules, so the real path to the app
+  // shell is /public/index.html. On Netlify, netlify.toml redirects "/"
+  // to /public/index.html, so a plain "/" also works there — but using
+  // the explicit /public/ path here keeps local dev and prod consistent.
+  function resolveAppUrl(page) {
+    return `/public/${page}`;
+  }
 
-      function renderButton() {
-        card.innerHTML = `
-          <div class="login-card__logo">${LADDER_LOGO_SVG}</div>
-          <h1 class="login-card__title">CODE Ladderr</h1>
-          <p class="login-card__subtitle">Track your DSA practice, every day.</p>
-          <button class="login-card__google-btn" id="google-signin-btn">Continue with Google</button>
-        `;
-        document.getElementById("google-signin-btn").addEventListener("click", async () => {
-          try {
-            await signInWithGoogle();
-          } catch (err) {
-            console.error("Sign-in failed", err);
-          }
-        });
-      }
+  const errorEl = document.getElementById("signin-error");
 
-      handleRedirectResult().catch((err) => console.error("Redirect sign-in failed", err));
+  // Decorative heatmap squares in the hero mockup — illustrative only.
+  const heatmapEl = document.getElementById("mockup-heatmap");
+  const levels = [0.15, 0.3, 0.55, 0.8, 1];
+  const pattern = [0,2,3,0,4,1,0,3,2, 1,0,4,2,0,3,1,0,4, 0,3,1,0,2,4,0,1,3, 2,0,3,4,0,1,2,0,4];
+  pattern.forEach((level) => {
+    const cell = document.createElement("span");
+    if (level > 0) {
+      cell.style.background = `color-mix(in srgb, var(--accent) ${levels[level] * 100}%, var(--border))`;
+    }
+    heatmapEl.appendChild(cell);
+  });
 
-      onAuthChange((user) => {
-        if (user) {
-          window.location.href = resolveAppUrl("index.html");
-        } else {
-          renderButton();
-        }
-      });
-    </script>
-  </body>
+  async function handleSignIn(event) {
+    const btn = event.currentTarget;
+    btn.disabled = true;
+    errorEl.style.display = "none";
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      console.error("Sign-in failed", err);
+      errorEl.style.display = "block";
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  document.querySelectorAll(".js-google-signin").forEach((btn) => {
+    btn.addEventListener("click", handleSignIn);
+  });
+
+  handleRedirectResult().catch((err) => console.error("Redirect sign-in failed", err));
+
+  onAuthChange((user) => {
+    if (user) {
+      window.location.href = resolveAppUrl("index.html");
+    }
+  });
+</script>
+
+</body>
 </html>
