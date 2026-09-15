@@ -9,6 +9,8 @@
 import { getState } from "../../state/store.js";
 import { getAllSubDocs, setSubDoc, deleteSubDoc } from "../../firebase/firestore.js";
 import { ensureStyle } from "../practice/_ensure-style.js";
+import { ROADMAP_TOPICS } from "../roadmap/roadmap-view.js";
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
 
 let rootEl = null;
 let clickHandler = null;
@@ -16,6 +18,17 @@ let dragHandlers = null;
 let concepts = []; // [{id, name, learned, source}]
 let editingIds = new Set(); // concept ids currently showing their delete button
 let addPopoverOpen = false;
+
+
+const TOPIC_ORDER = new Map(ROADMAP_TOPICS.map((t, i) => [t.id, i]));
+
+function sortConcepts(list) {
+  return [...list].sort((a, b) => {
+    const ai = TOPIC_ORDER.has(a.id) ? TOPIC_ORDER.get(a.id) : Infinity;
+    const bi = TOPIC_ORDER.has(b.id) ? TOPIC_ORDER.get(b.id) : Infinity;
+    return ai - bi;
+  });
+}
 
 function generateId() {
   if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -101,14 +114,14 @@ export async function mount(container) {
               </div>
             </span>
           </div>
-          <div class="concepts-view__cards" data-column="yet"></div>
+          <div class="concepts-view__cards" data-column="yet">${LOADING_MARKUP}</div>
         </div>
 
         <div class="concepts-view__column">
           <div class="concepts-view__column-header">
             <span class="concepts-view__column-title concepts-view__column-title--green">Learned</span>
           </div>
-          <div class="concepts-view__cards" data-column="learned"></div>
+          <div class="concepts-view__cards" data-column="learned">${LOADING_MARKUP}</div>
         </div>
       </div>
     </section>
@@ -117,9 +130,25 @@ export async function mount(container) {
   const { user } = getState();
   if (user) {
     concepts = await getAllSubDocs(user.uid, "concepts");
+    // mount() may resolve after unmount() was called (fast section switching) — bail out.
+    if (rootEl !== container) return;
+
+    if (concepts.length === 0) {
+      // First visit for this user — seed from the roadmap topic list.
+      concepts = ROADMAP_TOPICS.map((t) => ({
+        id: t.id,
+        name: t.label,
+        learned: false,
+        source: "roadmap",
+      }));
+      await Promise.all(
+        concepts.map((c) =>
+          setSubDoc(user.uid, "concepts", c.id, { name: c.name, learned: c.learned, source: c.source }, true)
+        )
+      );
+    }
   }
-  // mount() may resolve after unmount() was called (fast section switching) — bail out.
-  if (rootEl !== container) return;
+  concepts = sortConcepts(concepts);
 
   renderColumns(container);
 
