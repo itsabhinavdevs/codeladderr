@@ -36,6 +36,12 @@ export async function open(problem, sheetId) {
   const { user } = getState();
   const existing = (user && (await getSubDoc(user.uid, "questionData", problem.id))) || {};
 
+  let activeKey = "notes"; // Notes open by default
+  const draft = {};
+  FIELDS.forEach((f) => {
+    draft[f.key] = existing[f.key] ? String(existing[f.key]) : "";
+  });
+
   overlayEl = document.createElement("div");
   overlayEl.className = "notes-modal-overlay";
   overlayEl.innerHTML = `
@@ -44,45 +50,78 @@ export async function open(problem, sheetId) {
         <h2 class="notes-modal__title">${problem.title}</h2>
         <button type="button" class="notes-modal__close" aria-label="Close">&times;</button>
       </header>
+
       <div class="notes-modal__body">
+        <label class="notes-modal__label" data-active-label></label>
+        <textarea class="notes-modal__textarea" data-active-textarea rows="8"></textarea>
+      </div>
+
+      <div class="notes-modal__tabs" role="tablist">
         ${FIELDS.map(
           (field) => `
-          <section class="notes-modal__field" data-field="${field.key}">
-            <label class="notes-modal__label">${field.label}</label>
-            <textarea class="notes-modal__textarea" rows="3">${
-              existing[field.key] ? String(existing[field.key]) : ""
-            }</textarea>
-            <div class="notes-modal__actions">
-              <button type="button" class="notes-modal__cancel" data-action="cancel">Cancel</button>
-              <button type="button" class="notes-modal__save" data-action="save">Save</button>
-            </div>
-            <span class="notes-modal__status" aria-live="polite"></span>
-          </section>`
+          <button
+            type="button"
+            class="notes-modal__tab"
+            data-tab="${field.key}"
+            role="tab"
+            aria-selected="${field.key === activeKey}"
+          >${field.label}</button>`
         ).join("")}
       </div>
+
+      <div class="notes-modal__actions">
+        <button type="button" class="notes-modal__cancel" data-action="cancel">Cancel</button>
+        <button type="button" class="notes-modal__save" data-action="save">Save</button>
+      </div>
+      <span class="notes-modal__status" aria-live="polite"></span>
     </div>
   `;
   document.body.appendChild(overlayEl);
+
+  const labelEl = overlayEl.querySelector("[data-active-label]");
+  const textareaEl = overlayEl.querySelector("[data-active-textarea]");
+  const statusEl = overlayEl.querySelector(".notes-modal__status");
+
+  function renderActiveField() {
+    const field = FIELDS.find((f) => f.key === activeKey);
+    labelEl.textContent = field.label;
+    textareaEl.value = draft[activeKey];
+    overlayEl.querySelectorAll(".notes-modal__tab").forEach((btn) => {
+      const isActive = btn.dataset.tab === activeKey;
+      btn.classList.toggle("notes-modal__tab--active", isActive);
+      btn.setAttribute("aria-selected", String(isActive));
+    });
+    statusEl.textContent = "";
+  }
+  renderActiveField();
+
+  textareaEl.addEventListener("input", () => {
+    draft[activeKey] = textareaEl.value;
+  });
 
   overlayEl.addEventListener("click", async (event) => {
     if (event.target === overlayEl || event.target.closest(".notes-modal__close")) {
       close();
       return;
     }
-    const fieldSection = event.target.closest(".notes-modal__field");
-    if (!fieldSection) return;
-    const key = fieldSection.dataset.field;
-    const textarea = fieldSection.querySelector(".notes-modal__textarea");
-    const status = fieldSection.querySelector(".notes-modal__status");
 
-    if (event.target.dataset.action === "cancel") {
-      textarea.value = existing[key] ? String(existing[key]) : "";
-      status.textContent = "";
+    const tabBtn = event.target.closest(".notes-modal__tab");
+    if (tabBtn) {
+      activeKey = tabBtn.dataset.tab;
+      renderActiveField();
       return;
     }
+
+    if (event.target.dataset.action === "cancel") {
+      draft[activeKey] = existing[activeKey] ? String(existing[activeKey]) : "";
+      textareaEl.value = draft[activeKey];
+      statusEl.textContent = "";
+      return;
+    }
+
     if (event.target.dataset.action === "save") {
       if (!user) return;
-      status.textContent = "Saving...";
+      statusEl.textContent = "Saving...";
       await setSubDoc(
         user.uid,
         "questionData",
@@ -91,15 +130,15 @@ export async function open(problem, sheetId) {
           sheetId,
           title: problem.title,
           difficulty: problem.difficulty,
-          [key]: textarea.value,
+          [activeKey]: draft[activeKey],
           updatedAt: new Date().toISOString(),
         },
         true
       );
-      existing[key] = textarea.value;
-      status.textContent = "Saved";
+      existing[activeKey] = draft[activeKey];
+      statusEl.textContent = "Saved";
       setTimeout(() => {
-        if (status.isConnected) status.textContent = "";
+        if (statusEl.isConnected) statusEl.textContent = "";
       }, 1500);
     }
   });
