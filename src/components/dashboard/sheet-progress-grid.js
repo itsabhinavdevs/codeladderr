@@ -3,6 +3,8 @@ import { SHEETS } from '../../data/sheet-metadata.js';
 import { assetUrl } from '../../utils/asset-path.js';
 import { navigateTo } from '../../router/router.js';
 import { createProgressRing } from './progress-ring.js';
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
+
 
 const PRIMARY_SHEET_ID = 'dsa-patterns';
 
@@ -112,7 +114,7 @@ export async function mount(container, uid) {
   injectStyles();
   el = container;
   el.className = 'sheet-progress-grid';
-  el.innerHTML = '<p class="sheet-progress-grid__loading">Loading progress\u2026</p>';
+  el.innerHTML = LOADING_MARKUP;
 
   const primaryMeta = SHEETS.find((s) => s.id === PRIMARY_SHEET_ID);
   const otherMetas = SHEETS.filter((s) => s.id !== PRIMARY_SHEET_ID);

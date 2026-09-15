@@ -1,4 +1,6 @@
 import { getAllSubDocs } from '../../firebase/firestore.js';
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
+
 
 function injectStyles() {
   const href = new URL('./goal-history-panel.css', import.meta.url).href;
@@ -16,7 +18,7 @@ export async function mount(container, uid) {
   injectStyles();
   el = container;
   el.className = 'goal-history-panel';
-  el.innerHTML = '<p class="goal-history-panel__loading">Loading history\u2026</p>';
+  el.innerHTML = LOADING_MARKUP;
 
   const docs = await getAllSubDocs(uid, 'dailyGoals');
   const last7 = docs

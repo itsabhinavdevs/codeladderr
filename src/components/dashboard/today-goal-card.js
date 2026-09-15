@@ -1,6 +1,7 @@
 import { getSubDoc, setSubDoc } from '../../firebase/firestore.js';
 import { todayId } from '../../utils/date.js';
 import { mount as mountHistory, unmount as unmountHistory } from './goal-history-panel.js';
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
 
 function injectStyles() {
   const href = new URL('./today-goal-card.css', import.meta.url).href;
@@ -133,7 +134,9 @@ function render(container, uid, goals) {
 export async function mount(container, uid) {
   injectStyles();
   el = container;
+  container.innerHTML = LOADING_MARKUP;
   const goals = await loadGoals(uid);
+  if (el !== container) return; // guard fast section switches
   render(el, uid, goals);
 }
 

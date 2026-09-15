@@ -11,6 +11,7 @@ import * as patternSidebar from "./pattern-sidebar.js";
 import * as problemRow from "./problem-row.js";
 import * as notesModal from "./notes-editor-modal.js";
 import { ensureStyle } from "./_ensure-style.js";
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
 
 const DIFFICULTIES = ["Easy", "Medium", "Hard"];
 
@@ -192,7 +193,7 @@ export async function mount(container, params = {}) {
         <button class="sheet-view__back" type="button">&larr; Back</button>
       </header>
 
-      <div class="sheet-view__panel-slot"></div>
+      <div class="sheet-view__panel-slot">${LOADING_MARKUP}</div>
 
       <div class="sheet-view__toolbar">
         <div class="sheet-view__tabs" role="tablist">
@@ -226,7 +227,7 @@ export async function mount(container, params = {}) {
             <span>Revision</span>
             <span>Difficulty</span>
           </div>
-          <div class="problem-table__rows" aria-live="polite"></div>
+          <div class="problem-table__rows" aria-live="polite">${LOADING_MARKUP}</div>
         </div>
       </div>
     </section>

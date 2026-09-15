@@ -11,6 +11,7 @@ import { getState } from "../../state/store.js";
 import * as problemRow from "../practice/problem-row.js";
 import * as notesModal from "../practice/notes-editor-modal.js";
 import { ensureStyle } from "../practice/_ensure-style.js";
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
 
 let rootEl = null;
 let items = []; // [{ problem: {id,patternId,title,difficulty,problemUrl,videoUrl}, sheetId, ticked }]
@@ -70,7 +71,7 @@ export async function mount(container) {
           <span>Revision</span>
           <span>Difficulty</span>
         </div>
-        <div class="problem-table__rows" aria-live="polite"></div>
+        <div class="problem-table__rows" aria-live="polite">${LOADING_MARKUP}</div>
       </div>
     </section>
   `;

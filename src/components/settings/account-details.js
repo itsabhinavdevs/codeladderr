@@ -9,6 +9,7 @@ import { getState } from "../../state/store.js";
 import { getUserDoc, deleteUserData } from "../../firebase/firestore.js";
 import { deleteAuthUser } from "../../firebase/auth.js";
 import { navigateTo } from "../../router/router.js";
+import { LOADING_MARKUP } from "../shell/loading-indicator.js";
 
 let rootEl = null;
 
@@ -19,7 +20,7 @@ export async function mount(container) {
     <div class="account-details">
       <h1 class="account-details__title">Account</h1>
       <div class="account-details__card" data-profile-card>
-        <div class="account-details__loading">Loading account details...</div>
+        <div class="account-details__loading">${LOADING_MARKUP}</div>
       </div>
 
       <div class="account-details__danger-zone">
