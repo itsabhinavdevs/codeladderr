@@ -36,14 +36,14 @@ export const LADDER_LOGO_SVG = `
   </style>
 
   <!-- rails -->
-  <line x1="10" y1="8" x2="10" y2="32" stroke="#22883b" stroke-width="2.6" stroke-linecap="round" />
-  <line x1="30" y1="8" x2="30" y2="32" stroke="#22883b" stroke-width="2.6" stroke-linecap="round" />
+  <line x1="10" y1="8" x2="10" y2="32" stroke="#2ec4a6" stroke-width="2.6" stroke-linecap="round" />
+  <line x1="30" y1="8" x2="30" y2="32" stroke="#2ec4a6" stroke-width="2.6" stroke-linecap="round" />
 
   <!-- rungs -->
-  <line x1="10" y1="12" x2="30" y2="12" stroke="#22883b" stroke-width="2.2" stroke-linecap="round" />
-  <line x1="10" y1="17" x2="30" y2="17" stroke="#22883b" stroke-width="2.2" stroke-linecap="round" />
-  <line x1="10" y1="22" x2="30" y2="22" stroke="#22883b" stroke-width="2.2" stroke-linecap="round" />
-  <line x1="10" y1="27" x2="30" y2="27" stroke="#22883b" stroke-width="2.2" stroke-linecap="round" />
+  <line x1="10" y1="12" x2="30" y2="12" stroke="#2ec4a6" stroke-width="2.2" stroke-linecap="round" />
+  <line x1="10" y1="17" x2="30" y2="17" stroke="#2ec4a6" stroke-width="2.2" stroke-linecap="round" />
+  <line x1="10" y1="22" x2="30" y2="22" stroke="#2ec4a6" stroke-width="2.2" stroke-linecap="round" />
+  <line x1="10" y1="27" x2="30" y2="27" stroke="#2ec4a6" stroke-width="2.2" stroke-linecap="round" />
 
   <!-- rung bolts -->
   <circle cx="10" cy="12" r="0.7" fill="#14351f" />

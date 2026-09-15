@@ -4,13 +4,13 @@
 :root,
 [data-theme="dark"] {
   /* Surfaces */
-  --color-bg: #1a1a1a;
-  --color-card: #282828;
-  --color-border: #3e3e3e;
+  --color-bg: #0b0b0d;
+  --color-card: #111114;
+  --color-border: #232326;
 
   /* Text */
-  --color-text-primary: #e8e8e8;
-  --color-text-secondary: #8a8a8a;
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #9a9aa0;
 
   /* Top bars */
   --color-topbar-bg: #0000002c;
@@ -18,7 +18,7 @@
   --color-topbar-hover: #d4d4d4;
 
   /* Difficulty Indicators */
-  --color-easy: #3b82f6;
+  --color-easy: #2ec4a6;
   --color-medium: #eab308;
   --color-hard: #ef4444;
 
@@ -30,7 +30,7 @@
   --color-contrib-4: #39d353;
 
   /* change ladder color to green */
-  --color-brand-accent: #22c55e;
+  --color-brand-accent: #2ec4a6;
 
   /* Hub accents — decorative only (badges, card left-bars). Never used for
      difficulty and never green, since green is reserved for the contribution
