@@ -96,11 +96,13 @@ function slugify(str) {
 // Problems are [title, difficulty, ...links]. A trailing youtube.com/youtu.be link (if
 // present) is the videoUrl; the first remaining link is the problemUrl. Any additional
 // alternate-judge links beyond that aren't part of this project's data model and are dropped.
+const JUDGE_DOMAINS = /leetcode\.com|geeksforgeeks\.org\/problems|interviewbit\.com|hackerrank\.com|codeforces\.com|codingninjas\.com|naukri\.com\/code360/i;
+
 function pickUrls(links) {
   const clean = links.filter(Boolean);
-  const videoUrl = clean.find((l) => /youtu\.?be/i.test(l)) || "";
-  const problemUrl = clean.find((l) => l !== videoUrl) || "";
-  return { problemUrl, videoUrl };
+  const problemUrl = clean.find((l) => JUDGE_DOMAINS.test(l)) || "";
+  const resourceUrls = clean.filter((l) => l !== problemUrl); // everything else: video, article, extra judge links
+  return { problemUrl, resourceUrls };
 }
 
 const SOURCES = [
@@ -124,13 +126,13 @@ for (const { groups, fallbackSheetId } of SOURCES) {
     sheets[sheetId][patternId] ??= { name: group.pattern, problems: [] };
 
     group.problems.forEach(([title, difficulty, ...links], index) => {
-      const { problemUrl, videoUrl } = pickUrls(links);
+      const { problemUrl, resourceUrls } = pickUrls(links);
       sheets[sheetId][patternId].problems.push({
-        problemId: `${patternId}-${index}`, // stable id scheme, matches the old app's client-side ids
+        problemId: `${patternId}-${index}`,
         title,
         difficulty,
         problemUrl,
-        videoUrl,
+        resourceUrls,
       });
     });
   }
@@ -165,7 +167,7 @@ async function run() {
             title: problem.title,
             difficulty: problem.difficulty,
             problemUrl: problem.problemUrl,
-            videoUrl: problem.videoUrl,
+            resourceUrls: problem.resourceUrls,
           },
           { merge: true }
         );

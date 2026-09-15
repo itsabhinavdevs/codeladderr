@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background depth -->
+    <radialGradient id="badgeBg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#23272e"/>
+      <stop offset="100%" stop-color="#0f1115"/>
+    </radialGradient>
+
+    <!-- Sleek silver-white gradient for the 'F' -->
+    <linearGradient id="silverF" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- High-energy neon orange accent -->
+    <linearGradient id="neonOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7a1a"/>
+      <stop offset="100%" stop-color="#e04e00"/>
+    </linearGradient>
+
+    <!-- Dynamic drop shadow -->
+    <filter id="speedShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="3" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Circular Token -->
+  <circle cx="250" cy="250" r="230" fill="url(#badgeBg)"/>
+  
+  <!-- Subtle Racing Edge Rim -->
+  <circle cx="250" cy="250" r="228" fill="none" stroke="#333842" stroke-width="2.5" opacity="0.6"/>
+
+  <g filter="url(#speedShadow)">
+    <!-- Main Forward-Leaning 'F' Body -->
+    <path fill="url(#silverF)" d="
+      M 190 145 
+      C 152 145 125 178 112 215 
+      L 90 270 
+      C 82 290 92 312 113 312 
+      L 142 312 
+      L 115 375 
+      L 165 375 
+      L 182 328 
+      C 185 320 193 315 202 315 
+      L 315 315 
+      L 325 272 
+      L 190 272 
+      C 178 272 170 260 174 249 
+      L 188 214 
+      C 192 204 201 197 212 197 
+      L 345 197 
+      L 355 145 
+      Z"/>
+
+    <!-- Integrated Fast-Forward / Arrow Tip Cutout -->
+    <polygon fill="#1a1c22" points="332,197 385,235 322,272 342,235"/>
+
+    <!-- Dynamic Orange Chevron Accent -->
+    <polygon fill="url(#neonOrange)" points="350,145 390,145 425,235 352,315 325,315 385,235"/>
+  </g>
+</svg>

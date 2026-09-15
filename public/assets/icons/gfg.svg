@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="100%" height="100%">
+  <!-- Exact mathematical reconstruction with a very slight sub-pixel rounding adjustment on the interior gap dimensions for optical balance -->
+  <path fill="#2f8d46" fill-rule="evenodd" d="
+    M 200 63.4
+    L 200 130
+    L 300 130
+    L 300 63.4
+    A 100 100 0 1 1 252.02 170
+    L 247.98 170
+    A 100 100 0 1 1 200 63.4
+    Z
+    
+    M 93.43 130
+    A 60 60 0 0 1 200 116.83
+    L 200 130
+    Z
+    
+    M 300 130
+    L 300 116.83
+    A 60 60 0 0 1 406.57 130
+    Z
+    
+    M 93.43 170
+    A 60 60 0 0 0 206.57 170
+    Z
+    
+    M 293.43 170
+    A 60 60 0 0 0 406.57 170
+    Z" />
+</svg>

@@ -8,6 +8,7 @@ import { recordSolve } from "../../utils/contributions.js";
 import { getState } from "../../state/store.js";
 import { getDifficultyColor } from "../../utils/difficulty-colors.js";
 import { ensureStyle } from "./_ensure-style.js";
+import { getPlatformIcon } from "../../utils/platform-icons.js";
 
 function labelFromPatternId(patternId) {
   return patternId
@@ -22,16 +23,7 @@ const STAR_ICON = `
       stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none" />
   </svg>`;
 
-const LINK_ICON = `
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M14 5h5v5M19 5l-9 9M9 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-3"
-      stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>`;
 
-const PLAY_ICON = `
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M8 5v14l11-7z" />
-  </svg>`;
 
 /**
  * @param {{id,patternId,title,difficulty,problemUrl,videoUrl}} problem
@@ -68,8 +60,13 @@ export function render(problem, { ticked, revision, sheetId, onTickChange, onRev
 
     <span class="problem-row__cell problem-row__cell--resource">
       ${
-        problem.videoUrl
-          ? `<a href="${problem.videoUrl}" target="_blank" rel="noopener" class="problem-row__icon-link" aria-label="Watch video">${PLAY_ICON}</a>`
+        problem.resourceUrls && problem.resourceUrls.length
+          ? problem.resourceUrls
+              .map(
+                (url) =>
+                  `<a href="${url}" target="_blank" rel="noopener" class="problem-row__icon-link" aria-label="Open resource">${getPlatformIcon(url)}</a>`
+              )
+              .join("")
           : `<span class="problem-row__dash">-</span>`
       }
     </span>
@@ -77,7 +74,7 @@ export function render(problem, { ticked, revision, sheetId, onTickChange, onRev
     <span class="problem-row__cell problem-row__cell--practice">
       ${
         problem.problemUrl
-          ? `<a href="${problem.problemUrl}" target="_blank" rel="noopener" class="problem-row__icon-link" aria-label="Open problem">${LINK_ICON}</a>`
+          ? `<a href="${problem.problemUrl}" target="_blank" rel="noopener" class="problem-row__icon-link" aria-label="Open problem">${getPlatformIcon(problem.problemUrl)}</a>`
           : `<span class="problem-row__dash">-</span>`
       }
     </span>

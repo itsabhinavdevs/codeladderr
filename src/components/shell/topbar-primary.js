@@ -21,7 +21,7 @@ function render() {
       </button>
       <button class="topbar-primary__logo-btn" id="logo-btn" aria-label="Go to dashboard">
         ${LADDER_LOGO_SVG}
-        <span class="topbar-primary__brand-name">CODE <b>Ladderr</b></span>
+        <span class="topbar-primary__brand-name">CODE <b>Ladder</b></span>
       </button>
       <div class="topbar-primary__spacer"></div>
       <div class="topbar-primary__streak" aria-label="${streak}-day streak">

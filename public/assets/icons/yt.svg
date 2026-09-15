@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Vibrant dynamic red gradient -->
+    <linearGradient id="ytRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff1a2b"/>
+      <stop offset="60%" stop-color="#e60000"/>
+      <stop offset="100%" stop-color="#b80000"/>
+    </linearGradient>
+
+    <!-- Subtle soft glow & drop shadow -->
+    <filter id="softShadow" x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#ff0000" flood-opacity="0.32"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Inner play button gradient -->
+    <linearGradient id="playGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0f2f5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Main Outer Pill with modern curvature and shadow -->
+  <path fill="url(#ytRedGrad)" filter="url(#softShadow)" d="M485.4 142.2c-5.4-20.5-21.7-36.8-42.2-42.2C405.8 89 256 89 256 89s-149.8 0-187.2 11c-20.5 5.4-36.8 21.7-42.2 42.2C16 179.6 16 256 16 256s0 76.4 10.6 113.8c5.4 20.5 21.7 36.8 42.2 42.2C106.2 423 256 423 256 423s149.8 0 187.2-11c20.5-5.4 36.8-21.7 42.2-42.2C496 332.4 496 256 496 256s0-76.4-10.6-113.8z"/>
+
+  <!-- Glass-sheen reflection accent on top edge -->
+  <path fill="#ffffff" fill-opacity="0.12" d="M70 120 C 130 98, 382 98, 442 120 C 466 128, 480 148, 485 170 C 370 140, 142 140, 27 170 C 32 148, 46 128, 70 120 Z"/>
+
+  <!-- Refined Play Button with micro-rounded apexes and subtle depth -->
+  <path fill="url(#playGrad)" d="M205 186.5c0-4.6 5-7.5 9-5.2l123.4 69.5c4 2.3 4 8.1 0 10.4L214 330.7c-4 2.3-9-.6-9-5.2V186.5z"/>
+</svg>

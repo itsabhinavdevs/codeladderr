@@ -27,7 +27,7 @@ function render() {
       <div class="sidebar__header">
         <button class="sidebar__logo-btn" id="sidebar-logo-btn" aria-label="Go to dashboard">
           ${LADDER_LOGO_SVG}
-          <span class="sidebar__brand-name">CODE <b>Ladderr</b></span>
+          <span class="sidebar__brand-name">CODE <b>Ladder</b></span>
         </button>
         <button class="sidebar__close-btn" id="sidebar-close-btn" aria-label="Close menu">
           <span aria-hidden="true">&times;</span>

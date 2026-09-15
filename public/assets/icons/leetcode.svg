@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Modern high-contrast gradients -->
+    <linearGradient id="blackStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1f24"/>
+      <stop offset="100%" stop-color="#050608"/>
+    </linearGradient>
+
+    <linearGradient id="amberStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9900"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+
+    <linearGradient id="greyStroke" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#9ca3af"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Upper Orange Arc -->
+  <path d="M 440 180 
+           C 515 220, 565 275, 605 325" 
+        fill="none" 
+        stroke="url(#amberStroke)" 
+        stroke-width="96" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- 2. Lower Orange Hook (flows smoothly from the dark chevron) -->
+  <path d="M 345 625 
+           C 390 690, 480 735, 545 690 
+           C 575 670, 595 640, 610 605" 
+        fill="none" 
+        stroke="url(#amberStroke)" 
+        stroke-width="96" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- 3. Primary Dark Chevron -->
+  <path d="M 525 95 
+           L 210 410 
+           L 350 625" 
+        fill="none" 
+        stroke="url(#blackStroke)" 
+        stroke-width="96" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- 4. Central Horizontal Bar -->
+  <line x1="395" y1="410" 
+        x2="700" y2="410" 
+        stroke="url(#greyStroke)" 
+        stroke-width="92" 
+        stroke-linecap="round"/>
+</svg>

@@ -111,7 +111,7 @@ export async function mount(container) {
       title: doc.title,
       difficulty: doc.difficulty,
       problemUrl: null,
-      videoUrl: null,
+      resourceUrls: [],
     };
     return {
       problem,
