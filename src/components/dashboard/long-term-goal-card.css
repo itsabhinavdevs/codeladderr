@@ -1,11 +1,12 @@
 .long-term-goal-card h3 {
   color: var(--color-text-primary);
-  margin: 0 0 12px;
+  margin: 0 0 16px;
+  font-size: 1.05rem;
 }
 
 .long-term-goal-card__list {
   list-style: none;
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -15,10 +16,19 @@
 .long-term-goal-card__item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   background-color: var(--color-bg);
-  border-radius: 6px;
-  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.long-term-goal-card__item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-easy);
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .long-term-goal-card__item--completed .long-term-goal-card__text {
@@ -29,29 +39,38 @@
 .long-term-goal-card__text {
   color: var(--color-text-primary);
   flex: 1;
+  font-size: 0.92rem;
 }
 
 .long-term-goal-card__due {
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
 }
 
 .long-term-goal-card__empty {
   color: var(--color-text-secondary);
   font-style: italic;
+  padding: 4px;
 }
 
 .long-term-goal-card__add-btn {
   background: none;
   border: 1px dashed var(--color-border);
   color: var(--color-text-secondary);
-  border-radius: 6px;
-  padding: 6px 12px;
+  border-radius: 8px;
+  padding: 8px 14px;
   cursor: pointer;
+  font-size: 0.88rem;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .long-term-goal-card__add-btn:hover {
   color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
 }
 
 .long-term-goal-card__form {
@@ -66,8 +85,14 @@
   background-color: var(--color-bg);
   border: 1px solid var(--color-border);
   color: var(--color-text-primary);
-  border-radius: 6px;
-  padding: 6px 10px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.long-term-goal-card__text-input:focus-visible,
+.long-term-goal-card__date-input:focus-visible {
+  border-color: var(--color-easy);
 }
 
 .long-term-goal-card__text-input {
@@ -77,19 +102,30 @@
 
 .long-term-goal-card__save-btn {
   background-color: var(--color-easy);
-  color: var(--color-bg);
+  color: #04231d;
   border: none;
-  border-radius: 6px;
-  padding: 6px 14px;
+  border-radius: 8px;
+  padding: 8px 16px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 0.88rem;
+  transition: transform var(--transition-fast);
+}
+
+.long-term-goal-card__save-btn:hover {
+  transform: translateY(-1px);
 }
 
 .long-term-goal-card__cancel-btn {
   background: none;
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
-  border-radius: 6px;
-  padding: 6px 14px;
+  border-radius: 8px;
+  padding: 8px 16px;
   cursor: pointer;
+  font-size: 0.88rem;
+}
+
+.long-term-goal-card__cancel-btn:hover {
+  color: var(--color-text-primary);
 }

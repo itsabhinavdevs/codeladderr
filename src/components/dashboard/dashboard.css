@@ -26,6 +26,13 @@
 .dashboard__heatmap {
   background-color: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: var(--radius-lg, 16px);
+  padding: 24px;
+  box-shadow: var(--shadow-card, 0 20px 45px rgba(0, 0, 0, 0.35));
+  transition: border-color var(--transition-base);
+}
+
+.dashboard__today-goal:hover,
+.dashboard__long-term-goal:hover {
+  border-color: var(--color-border-hover, #4a4a4a);
 }
