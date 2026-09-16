@@ -7,6 +7,7 @@
   --color-bg: #0b0b0d;
   --color-card: #111114;
   --color-border: #232326;
+  --color-border-hover: #4a4a4a;
 
   /* Text */
   --color-text-primary: #f5f5f5;
@@ -23,7 +24,7 @@
   --color-hard: #ef4444;
 
   /* Contribution Heatmap */
-  --color-contrib-0: #161616;
+  --color-contrib-0: #2e2d2d;
   --color-contrib-1: #0e4429;
   --color-contrib-2: #006d32;
   --color-contrib-3: #26a641;
@@ -97,9 +98,11 @@
   /* Borders & Radii */
   --radius-sm: 6px;
   --radius-md: 10px;
+  --radius-lg: 16px;
 
   /* Shadows & Transitions */
   --shadow-panel: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 20px 45px rgba(0, 0, 0, 0.35);
   --transition-fast: 150ms ease;
   --transition-base: 220ms ease;
 }
